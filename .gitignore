@@ -1,0 +1,13 @@
+# Secretos y configuración local — nunca commitear
+.env
+*.local.json
+local.settings.json
+deployment-settings-*.json
+
+# Contexto de sesión de Cowork — es local al Project de cada consultor, no al repo de la skill
+.d365-session.md
+
+# Sistema operativo / editor
+.DS_Store
+Thumbs.db
+.vscode/
