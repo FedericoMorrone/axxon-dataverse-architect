@@ -7,10 +7,10 @@ description: >
   directo a TEST/PROD. Usar esta skill cuando el usuario pida crear una solución o publisher,
   agregar un componente a la solución, versionar la solución, promover al ambiente de TEST o
   PROD, listar soluciones o componentes, consultar el estado de un pipeline o deploy, generar
-  un script de pac CLI, o hable de ALM en general. Usar junto con la skill d365-architect.
+  un script de pac CLI, o hable de ALM en general. Usar junto con la skill dataverse-architect.
 ---
 
-# Solution Packager — D365 Architect Agent
+# Solution Packager — Axxon Dataverse Architect
 
 Skill especializada en la gestión del ciclo de vida de **soluciones** en Dataverse / D365 CE.
 A partir de v2.0.0 opera en **dos canales completamente separados** (ver ADR-001):

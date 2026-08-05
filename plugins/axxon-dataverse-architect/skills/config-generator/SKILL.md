@@ -1,17 +1,17 @@
 ---
 name: config-generator
 description: >
-  Genera artefactos de configuración a partir de las acciones de otras skills del D365
-  Architect Agent: Environment Variables (definición en DEV vía Web API, valores por ambiente
+  Genera artefactos de configuración a partir de las acciones de otras skills del Axxon
+  Dataverse Architect: Environment Variables (definición en DEV vía Web API, valores por ambiente
   vía `pac solution create-settings` en git), documentación técnica, y el Solution Design
   Document. Usar esta skill cuando el usuario pida generar un script de pac CLI, exportar
   configuración, generar documentación, crear un script reproducible, documentar lo que se
   hizo en la sesión, generar el Solution Design Document o armar el SDD, generar el JSON de la
   solución, crear environment variables, o generar el deployment settings file. Usar junto con
-  la skill d365-architect.
+  la skill dataverse-architect.
 ---
 
-# Config Generator — D365 Architect Agent
+# Config Generator — Axxon Dataverse Architect
 
 Skill transversal que toma el output de las otras skills y genera **artefactos listos para
 usar**: deployment settings, specs, documentación y checklists.

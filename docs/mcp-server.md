@@ -12,7 +12,7 @@ tipo: infrastructure
 audiencia: desarrollador que implementa el backend del agente
 ---
 
-# MCP Server — D365 Architect Agent
+# MCP Server — Axxon Dataverse Architect
 
 El MCP Server es el **backend** del agente: una **Azure Function** (Node.js 20 LTS) que expone
 las tools del agente como endpoints HTTP. A partir de v2.0.0 tiene **dos responsabilidades
@@ -32,7 +32,7 @@ separadas**, no una:
 ## Arquitectura
 
 ```
-Claude Cowork (skill `d365-architect` + skills específicas)
+Claude Cowork (skill `dataverse-architect` + skills específicas)
         │
         │ HTTP POST /api/tools/{toolName}
         │ Authorization: Bearer {token del Conector MCP de Cowork}
@@ -78,7 +78,7 @@ Azure Function (D365 Architect MCP Server)
 ## Estructura del proyecto
 
 ```
-d365-architect-mcp/
+axxon-dataverse-architect-mcp/
 ├── src/
 │   ├── functions/
 │   │   ├── toolDispatcher.ts        # Entry point — recibe todos los tool calls, asigna correlationId
@@ -164,7 +164,7 @@ app.http("toolDispatcher", {
 ```
 
 > **`correlationId`**: se genera una vez por tool call, se loguea en Application Insights, se
-> devuelve a Claude, y la skill `d365-architect` lo anota en `.d365-session.md` del Cowork
+> devuelve a Claude, y la skill `dataverse-architect` lo anota en `.d365-session.md` del Cowork
 > Project activo. Cuando el canal es `git`/`pipeline`, el mismo `correlationId` se agrega como
 > tag al commit o al pipeline run, cerrando la trazabilidad completa: chat → log de Function →
 > PR/pipeline.
@@ -447,7 +447,7 @@ Sin cambios respecto a v1.0.0, con un agregado: el Service Principal del MCP Ser
 **dos identidades de permisos separadas**, no una:
 
 ```
-App Registration "MCP Server — D365 Architect Agent"
+App Registration "MCP Server — Axxon Dataverse Architect"
   Tipo: Single-tenant (del cliente)
   Redirect URIs: ninguna (daemon flow — Client Credentials)
 
@@ -525,7 +525,7 @@ az functionapp config appsettings set \
     "AZURE_DEVOPS_ORG=axxon" \
     "AZURE_DEVOPS_PROJECT={cliente}"
 
-cd d365-architect-mcp
+cd axxon-dataverse-architect-mcp
 npm run build
 func azure functionapp publish func-axx-{cliente}-mcp
 ```

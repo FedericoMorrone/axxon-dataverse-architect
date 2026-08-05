@@ -8,10 +8,10 @@ description: >
   role, configurar permisos, asignar permisos sobre una entidad, crear una business unit o
   team, configurar field level security o column security, diseñar el modelo de seguridad,
   preguntar quién puede ver qué, configurar sharing, hierarchy security, armar la matriz de
-  seguridad, o preguntar qué permisos tiene un rol. Usar junto con la skill d365-architect.
+  seguridad, o preguntar qué permisos tiene un rol. Usar junto con la skill dataverse-architect.
 ---
 
-# Security Architect — D365 Architect Agent
+# Security Architect — Axxon Dataverse Architect
 
 Skill especializada en el diseño e implementación del **modelo de seguridad** en Dataverse /
 Dynamics 365 CE. La seguridad en D365 es multicapa — esta skill cubre las cuatro capas

@@ -1,4 +1,4 @@
-# Changelog — D365 Architect Agent
+# Changelog — Axxon Dataverse Architect
 
 ## v1.0.0-rc1 (2026-08-05)
 

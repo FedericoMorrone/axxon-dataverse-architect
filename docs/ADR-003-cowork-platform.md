@@ -2,7 +2,7 @@
 
 **Estado:** Aceptado
 **Fecha:** 2026-08-05
-**Contexto del proyecto:** D365 Architect Agent — Axxon Consulting
+**Contexto del proyecto:** Axxon Dataverse Architect — Axxon Consulting
 **Depende de / modifica:** ADR-001 (modelo de ejecución), ADR-002 (topología)
 
 ---
@@ -66,7 +66,7 @@ routing por canal (ADR-001), el patrón confirm-before-execute, el manejo de err
 restricciones de PROD. Esas reglas no pertenecen a ninguna skill específica — si las
 repetimos en cada una, se desincronizan con el tiempo.
 
-**Decisión:** se mantiene una skill "conductora" — `d365-architect/SKILL.md` — con una
+**Decisión:** se mantiene una skill "conductora" — `dataverse-architect/SKILL.md` — con una
 descripción diseñada para activarse en *cualquier* pedido relacionado con Dataverse/D365 CE,
 que documenta las reglas transversales y remite a la skill específica correspondiente. No es
 un Topic que "delega" en el sentido de Copilot Studio — es una skill más que Claude carga
@@ -123,7 +123,7 @@ un `sessionService.ts` — se retira de `07-mcp-server.md` (ver Consecuencias).
 
 Cowork ya tiene su propio mecanismo de aprobación de acciones (paso a paso vs. modo Auto,
 permisos por conector, confirmación antes de acciones irreversibles). El patrón
-confirm-before-execute que documentamos en `d365-architect/SKILL.md` (heredado de
+confirm-before-execute que documentamos en `dataverse-architect/SKILL.md` (heredado de
 `00-orchestrator.md`) se mantiene como **instrucción explícita dentro de la skill** — le dice a
 Claude qué acciones tratar como sensibles incluso si Cowork en modo Auto no las marcaría por sí
 solo (ej: disparar un pipeline hacia PROD). No reemplaza el mecanismo nativo de Cowork; lo
@@ -151,7 +151,7 @@ correr en el pipeline, no un reemplazo del gate oficial.
 
 - Se retira la sección de generación de spec Swagger 2.0 / Custom Connector de
   `06-config-generator.md` — ya no aplica.
-- `00-orchestrator.md` se retira y se reemplaza por `d365-architect/SKILL.md`, con el mismo
+- `00-orchestrator.md` se retira y se reemplaza por `dataverse-architect/SKILL.md`, con el mismo
   contenido de reglas transversales adaptado al formato real de Claude Skills.
 - Cada skill 01–09 se reorganiza en su propia carpeta (`entity-builder/SKILL.md`,
   `form-designer/SKILL.md`, etc.), con frontmatter mínimo (`name` + `description`) y el
@@ -174,5 +174,5 @@ correr en el pipeline, no un reemplazo del gate oficial.
   restricciones adicionales de red para sesiones en la nube que afecten la conexión al MCP
   Server (las sesiones en la nube tienen egress restringido salvo allowlist del admin).
 - La dependencia de la skill `output-formatter` (fuera de este paquete) queda formalmente
-  descartada para este agente — `d365-architect` no la referencia ni la requiere en ningún
+  descartada para este agente — `dataverse-architect` no la referencia ni la requiere en ningún
   punto (ver su sección "Output").

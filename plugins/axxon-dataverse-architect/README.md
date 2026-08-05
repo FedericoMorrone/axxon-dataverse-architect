@@ -1,4 +1,4 @@
-# D365 Architect Agent — Paquete de Skills (v1.0.0-rc1)
+# Axxon Dataverse Architect — Paquete de Skills (v1.0.0-rc1)
 
 Skills de **Claude Cowork** especializadas en la construcción de soluciones sobre
 **Microsoft Dataverse y Dynamics 365 CE** para Solution Architects.
@@ -23,7 +23,7 @@ Skills de **Claude Cowork** especializadas en la construcción de soluciones sob
 | `ADR-002-topology.md` | — (referencia) | Decisión arquitectónica: topología del MCP Server (por cliente) y de Azure DevOps | — |
 | `ADR-003-cowork-platform.md` | — (referencia) | Decisión arquitectónica: pivot Copilot Studio → Claude Cowork | — |
 | `07-mcp-server.md`            | — (referencia, no es skill)   | Azure Function: cliente Web API (DEV) + cliente Azure DevOps (Repos+Pipelines) | — |
-| `d365-architect/SKILL.md`     | d365-architect          | Skill conductora: routing por canal, contexto de proyecto, reglas transversales | — |
+| `dataverse-architect/SKILL.md`     | dataverse-architect          | Skill conductora: routing por canal, contexto de proyecto, reglas transversales | — |
 | `entity-builder/SKILL.md`     | entity-builder         | Tablas, columnas, relaciones, option sets                       | DEV / Web API |
 | `form-designer/SKILL.md`      | form-designer           | Formularios Main/Quick Create/Quick View/Card                   | DEV / Web API |
 | `business-rule-engine/SKILL.md` | business-rule-engine   | Business Rules, validaciones, visibilidad condicional           | DEV / Web API |
@@ -47,7 +47,7 @@ Arquitecto D365 (usuario)
         │ lenguaje natural
         ▼
 ┌───────────────────────────────────────────────────────────────────────┐
-│  Claude Cowork — skill `d365-architect` + skills específicas          │
+│  Claude Cowork — skill `dataverse-architect` + skills específicas          │
 │  Clasifica cada operación por canal antes de actuar (ver ADR-001)     │
 │  ┌────────────┐ ┌─────────────┐ ┌──────────────────┐                  │
 │  │entity-     │ │form-        │ │business-rule-    │  canal: DEV/API  │
@@ -126,10 +126,10 @@ Arquitecto D365 (usuario)
 - [ ] Conector MCP agregado (Customize → Connectors) apuntando a la instancia del MCP Server
       de este cliente — ver `07-mcp-server.md`, sección "Registro del MCP Server como Conector
       en Cowork"
-- [ ] Skill `d365-architect` y las skills específicas (`entity-builder`, `form-designer`, etc.)
+- [ ] Skill `dataverse-architect` y las skills específicas (`entity-builder`, `form-designer`, etc.)
       instaladas/habilitadas en el workspace de Cowork
 - [ ] `.d365-session.md` inicial creado en el Project (o se genera automáticamente en el
-      primer pedido, según `d365-architect/SKILL.md`)
+      primer pedido, según `dataverse-architect/SKILL.md`)
 
 ---
 
@@ -170,7 +170,7 @@ X.0.0.0  → Release mayor (nueva arquitectura)
 ## Flujo de trabajo típico con el agente (v3.0.0, Cowork)
 
 ```
-1. Iniciar sesión → skill `d365-architect` pide (o lee de `.d365-session.md`) environment DEV,
+1. Iniciar sesión → skill `dataverse-architect` pide (o lee de `.d365-session.md`) environment DEV,
    solución, publisher, repo+branch de ADO
 2. Describir la entidad en lenguaje natural
    → entity-builder crea tabla + columnas + relaciones EN DEV (feedback inmediato)
@@ -182,7 +182,7 @@ X.0.0.0  → Release mayor (nueva arquitectura)
    → security-architect genera XML + commitea a un branch (no toca DEV en vivo)
 6. Pedirle al agente que prepare la promoción
    → solution-packager exporta DEV → repo, config-generator genera los deployment settings
-   → `d365-architect` pide confirmación explícita → se abre el PR
+   → `dataverse-architect` pide confirmación explícita → se abre el PR
 7. Revisión humana del PR → merge
    → solution-packager dispara el pipeline (pac pack → check → import) hacia TEST
 8. Tras validar en TEST, promoción a PROD
@@ -226,5 +226,5 @@ X.0.0.0  → Release mayor (nueva arquitectura)
 
 ---
 
-*Generado por D365 Architect Agent — Axxon Consulting*
+*Generado por Axxon Dataverse Architect — Axxon Consulting*
 *Versión del paquete: 1.0.0-rc1 — Agosto 2026*

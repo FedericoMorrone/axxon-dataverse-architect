@@ -1,8 +1,8 @@
-# ADR-001 — Modelo de ejecución del D365 Architect Agent
+# ADR-001 — Modelo de ejecución del Axxon Dataverse Architect
 
 **Estado:** Aceptado
 **Fecha:** 2026-08-05
-**Contexto del proyecto:** D365 Architect Agent — Axxon Consulting
+**Contexto del proyecto:** Axxon Dataverse Architect — Axxon Consulting
 
 > **Nota de actualización (ver ADR-003, RC1):** las referencias a `axx_designsession` en este
 > documento reflejan el diseño original bajo Copilot Studio. Esa tabla fue retirada por

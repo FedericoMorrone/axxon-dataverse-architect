@@ -7,10 +7,10 @@ description: >
   tipo "si el campo X entonces el campo Y", pida ocultar un campo cuando pase algo, hacer un
   campo obligatorio condicionalmente, validar que un monto sea mayor a un valor, bloquear un
   campo según el estado, mostrar un mensaje de error, o describa cualquier lógica condicional
-  de formulario. Usar junto con la skill d365-architect.
+  de formulario. Usar junto con la skill dataverse-architect.
 ---
 
-# Business Rule Engine — D365 Architect Agent
+# Business Rule Engine — Axxon Dataverse Architect
 
 Skill especializada en la creación de **Business Rules** en Dataverse / Dynamics 365 CE.
 Las Business Rules son configuración declarativa que ejecuta lógica en el cliente (formulario)

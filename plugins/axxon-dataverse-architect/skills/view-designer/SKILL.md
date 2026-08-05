@@ -7,10 +7,10 @@ description: >
   una vista o view, agregar una columna a la vista, cambiar el orden de una vista, filtrar una
   vista, crear una vista de búsqueda rápida (Quick Find) o avanzada (Advanced Find), configurar
   una vista asociada o subgrid, una vista de lookup, preguntar qué vistas tiene una tabla, o
-  definir la vista por defecto. Usar junto con la skill d365-architect.
+  definir la vista por defecto. Usar junto con la skill dataverse-architect.
 ---
 
-# View Designer — D365 Architect Agent
+# View Designer — Axxon Dataverse Architect
 
 Skill especializada en la creación y modificación de **Views** (entidad de sistema
 `savedquery`) en Dataverse / Dynamics 365 CE. Las views definen qué columnas, orden y filtros

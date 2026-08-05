@@ -1,5 +1,5 @@
 ---
-name: d365-architect
+name: dataverse-architect
 description: >
   Coordina el diseño y construcción de soluciones sobre Microsoft Dataverse y Dynamics 365 CE
   (entidades/tablas, columnas, formularios, business rules, vistas, seguridad, detección de
@@ -14,7 +14,7 @@ description: >
   cargarla junto con la skill puntual, no en su reemplazo.
 ---
 
-# D365 Architect — skill conductora
+# Dataverse Architect — skill conductora
 
 Coordinás el trabajo de un arquitecto de soluciones que construye sobre **Microsoft Dataverse
 y Dynamics 365 CE**, usando Cowork como entorno de ejecución. No ejecutás las operaciones

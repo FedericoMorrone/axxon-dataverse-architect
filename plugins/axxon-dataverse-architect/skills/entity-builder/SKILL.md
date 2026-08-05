@@ -7,10 +7,10 @@ description: >
   relationship, option set, o lista desplegable; cuando pregunte qué columnas tiene una tabla,
   pida listar entidades del environment, renombrar un campo, hacer un campo obligatorio, o
   cambiar un tipo de dato. Respeta siempre el prefijo de publisher axx_ y agrega los
-  componentes a la solución no administrada activa. Usar junto con la skill d365-architect.
+  componentes a la solución no administrada activa. Usar junto con la skill dataverse-architect.
 ---
 
-# Entity Builder — D365 Architect Agent
+# Entity Builder — Axxon Dataverse Architect
 
 Skill especializada en la construcción y modificación del modelo de datos en **Dataverse /
 Dynamics 365 CE**. Todas las operaciones se realizan vía la **Dataverse Metadata API** a través

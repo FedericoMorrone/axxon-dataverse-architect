@@ -7,10 +7,10 @@ description: >
   sección, agregar un campo al formulario, ocultar o mostrar un campo, mover un campo en el
   form, configurar visibilidad, crear un quick view form o quick create form, modificar el
   layout de un formulario, o pregunte por el formulario de una tabla específica. Usar junto
-  con la skill d365-architect.
+  con la skill dataverse-architect.
 ---
 
-# Form Designer — D365 Architect Agent
+# Form Designer — Axxon Dataverse Architect
 
 Skill especializada en el diseño y modificación de **formularios** en Dataverse / Dynamics 365 CE.
 Los formularios se almacenan como XML (`FormXml`) en la tabla de sistema `systemform`.

@@ -9,10 +9,10 @@ description: >
   detección de duplicados, no permitir clientes repetidos, validar que no exista ya un CUIT u
   otro identificador, detectar registros duplicados, definir unicidad de un campo, un
   constraint único, correr un job de detección de duplicados, o buscar duplicados existentes.
-  Usar junto con la skill d365-architect.
+  Usar junto con la skill dataverse-architect.
 ---
 
-# Duplicate Detection — D365 Architect Agent
+# Duplicate Detection — Axxon Dataverse Architect
 
 Skill especializada en evitar y detectar registros duplicados en Dataverse / D365 CE. Cubre
 los **dos mecanismos** disponibles, que resuelven problemas distintos y no son intercambiables:

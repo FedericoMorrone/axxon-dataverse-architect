@@ -1,13 +1,13 @@
 {
-  "name": "axxon-d365-architect-agent",
+  "name": "axxon-dataverse-architect-marketplace",
   "owner": {
     "name": "Axxon Consulting"
   },
   "plugins": [
     {
-      "name": "d365-architect-agent",
+      "name": "axxon-dataverse-architect",
       "description": "Skills para diseñar y construir soluciones sobre Microsoft Dataverse / Dynamics 365 CE, con modelo de ejecución por canal (DEV/Web API, Git, Pipeline) y ALM vía Azure DevOps.",
-      "source": "./plugins/d365-architect-agent",
+      "source": "./plugins/axxon-dataverse-architect",
       "version": "1.0.0-rc1",
       "author": {
         "name": "Axxon Consulting"

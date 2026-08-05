@@ -2,7 +2,7 @@
 
 **Estado:** Aceptado
 **Fecha:** 2026-08-05
-**Contexto del proyecto:** D365 Architect Agent — Axxon Consulting
+**Contexto del proyecto:** Axxon Dataverse Architect — Axxon Consulting
 **Depende de:** ADR-001 (modelo de ejecución)
 
 > **Nota de actualización (ver ADR-003):** esta decisión de topología (una instancia de MCP
