@@ -1,0 +1,11 @@
+{
+  "name": "d365-architect-agent",
+  "displayName": "D365 Architect Agent",
+  "version": "1.0.0-rc1",
+  "description": "Skills para diseñar y construir soluciones sobre Microsoft Dataverse / Dynamics 365 CE: entidades, columnas, formularios, business rules, vistas, seguridad, detección de duplicados, environment variables, y promoción ALM vía Azure DevOps. Desarrollado por Axxon Consulting para uso interno del equipo de Solution Architects.",
+  "author": {
+    "name": "Axxon Consulting"
+  },
+  "license": "UNLICENSED",
+  "keywords": ["dataverse", "dynamics-365", "d365", "power-platform", "crm", "axxon"]
+}
