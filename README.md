@@ -7,6 +7,26 @@ Cowork con 9 skills para diseñar y construir soluciones sobre Microsoft Dataver
 
 **Estado actual: Release Candidate 1 (`v1.0.0-rc1`)**
 
+**Ubicación:** Azure DevOps, organización `FeMorrone`, Project **Axxon Dataverse Architect**.
+El repo se llama igual que el Project (con espacios) — Azure DevOps lo crea así por defecto
+al crear el Project, y no hace falta renombrarlo para que todo funcione: las URLs solo llevan
+`%20` en vez de guiones.
+
+---
+
+## Primera subida (una sola vez)
+
+Desde la carpeta descomprimida del repo:
+
+```bash
+git remote add origin "https://FeMorrone@dev.azure.com/FeMorrone/Axxon%20Dataverse%20Architect/_git/Axxon%20Dataverse%20Architect"
+git push -u origin main
+git push origin v1.0.0-rc1
+```
+
+(Te va a pedir autenticación — usá "Generate Git Credentials" desde la pantalla de Repos en
+Azure DevOps si todavía no tenés un PAT configurado.)
+
 ---
 
 ## Estructura del repo
@@ -36,7 +56,7 @@ axxon-dataverse-architect/
 Cada consultor, al empezar un proyecto que use el agente, corre esto una vez:
 
 ```
-/plugin marketplace add https://dev.azure.com/axxon/{Project}/_git/axxon-dataverse-architect
+/plugin marketplace add "https://dev.azure.com/FeMorrone/Axxon%20Dataverse%20Architect/_git/Axxon%20Dataverse%20Architect"
 /plugin install axxon-dataverse-architect@axxon-dataverse-architect-marketplace
 ```
 
