@@ -1,5 +1,59 @@
 # Changelog — Axxon Dataverse Architect
 
+## v1.2.0-rc1 (2026-08-18)
+
+Se agregan 2 skills más, siguiendo con la comparación contra
+[`microsoft/power-platform-skills`](https://github.com/microsoft/power-platform-skills) — esta
+vez a pedido explícito, cubriendo 2 de los otros 6 plugins del repo que originalmente se
+habían descartado por estar "fuera del alcance de Dataverse model-driven".
+
+### Agregado
+- **`flow-builder`** — Power Automate cloud flows: crear, editar (quirúrgico, a nivel de
+  acción), copiar, publicar/deshabilitar, y gestión de runs (historial, cancelar, reenviar,
+  diagnosticar). Usa el **FlowAgent MCP server oficial de Microsoft** — distinto del D365
+  Architect MCP Server propio de Axxon (ADR-002) — la skill verifica explícitamente que el
+  connector esté disponible antes de asumir que las tools existen.
+- **`code-app-builder`** — Power Apps Code Apps (React + Vite + TypeScript, 1500+ connectors,
+  autenticación Entra). Incluye una regla dura real de Microsoft (scaffolding siempre con
+  `npx degit`, nunca `git clone` ni archivos a mano) y una nota honesta: las fuentes sobre
+  estado GA vs. Preview de esta feature eran **contradictorias** al momento de escribir la
+  skill — se documentó la discrepancia en vez de elegir una al azar.
+- 2 canales nuevos en el routing de `dataverse-architect`: **PAC CLI / npx directo**
+  (`code-app-builder`) y **MCP externo** (`flow-builder`, FlowAgent) — ambos explícitamente
+  distintos de nuestro propio MCP Server por cliente.
+
+### Documentado (sin cambio funcional todavía)
+- **`ADR-004-mcp-apps-adoption.md` (Aceptado)** — al comparar el modelo de ejecución contra
+  el repo de Microsoft, se encontró el protocolo MCP Apps (vistas previas interactivas en
+  tool results, no una alternativa de performance). Se diseñó un MVP de 3 widgets
+  (`form-designer`, `view-designer`, `app-composer`), stack resuelto: **HTML/CSS/JS vanilla,
+  sin React** — el Azure Function no tiene pipeline de frontend hoy, y el contenido
+  (layouts, grillas, árboles de sitemap) no necesita el modelo de componentes de React.
+  Implementación todavía pendiente.
+
+## v1.1.0-rc1 (2026-08-18)
+
+Se agregan 2 skills nuevas tras comparar las 9 existentes contra el repo oficial de Microsoft
+[`microsoft/power-platform-skills`](https://github.com/microsoft/power-platform-skills) (plugin
+`model-apps`) — encontramos 2 capacidades reales que no cubríamos.
+
+### Agregado
+- **`app-composer`** — App module, Sitemap (Area/Group/SubArea), Dashboards, y Charts. Canal
+  DEV/Web API, mismo patrón que el resto del paquete (MCP tools, publish explícito al final).
+- **`genpage-builder`** — Generative Pages (React 17 + TypeScript + Fluent UI V9, corren
+  nativas dentro del shell de la app sin iframe). Adaptado del enfoque oficial de Microsoft
+  (`/genpage` en `model-apps`), incluyendo un gotcha técnico real documentado por Microsoft
+  (caché de módulo que se resetea en cada navegación — fix con `window.__pp<Entity>Cache`).
+  **Es Preview de Microsoft, no GA** — la skill exige confirmar esto con el cliente antes de
+  usarla, no lo asume.
+- Nuevo canal en el routing de `dataverse-architect`: **PAC CLI directo** (solo
+  `genpage-builder`) — distinto de DEV/Web API (que usa MCP tools del servidor por cliente).
+
+### No se tocó (evaluado y descartado como gap)
+- `solution-packager`, `duplicate-detection`, y el modelo de 3 canales con gates humanos —
+  Microsoft no los cubre con la misma profundidad ALM; nuestro paquete queda más maduro ahí,
+  no hacía falta adaptar nada de ese lado.
+
 ## v1.0.0-rc1 (2026-08-05)
 
 Primer release candidate del paquete migrado a Claude Cowork. Consolida el trabajo de

@@ -1,12 +1,14 @@
-# Axxon Dataverse Architect — Paquete de Skills (v1.0.0-rc1)
+# Axxon Dataverse Architect — Paquete de Skills (v1.2.0-rc1)
 
 Skills de **Claude Cowork** especializadas en la construcción de soluciones sobre
 **Microsoft Dataverse y Dynamics 365 CE** para Solution Architects.
 
 > **Cambios de arquitectura:** ver `ADR-001-execution-architecture.md` (canales de
-> ejecución), `ADR-002-topology.md` (topología del MCP Server) y
-> `ADR-003-cowork-platform.md` (pivot de plataforma: Copilot Studio → Claude Cowork). Este
-> README refleja el estado post-ADR-003.
+> ejecución), `ADR-002-topology.md` (topología del MCP Server), `ADR-003-cowork-platform.md`
+> (pivot de plataforma: Copilot Studio → Claude Cowork), y `ADR-004-mcp-apps-adoption.md`
+> (adopción de MCP Apps para vistas previas interactivas — MVP de 3 widgets en HTML/CSS/JS
+> vanilla, sin React). Este README refleja el estado post-ADR-003; ADR-004 está **Aceptado**
+> (diseño y stack resueltos), implementación todavía pendiente.
 
 > **Release Candidate 1.** Cerrado para este RC: la tabla `axx_designsession` queda retirada
 > por completo (el contexto conversacional vive en Cowork Projects), y la skill
@@ -32,6 +34,10 @@ Skills de **Claude Cowork** especializadas en la construcción de soluciones sob
 | `solution-packager/SKILL.md`  | solution-packager      | Publishers, soluciones (DEV) + promoción DEV→TEST→PROD (pipeline) | DEV / Web API + Pipeline |
 | `security-architect/SKILL.md` | security-architect      | Security Roles, Business Units, Teams, Column Security           | Git / XML de solución |
 | `config-generator/SKILL.md`   | config-generator        | Deployment settings, SDD, deployment checklist          | Git |
+| `app-composer/SKILL.md`       | app-composer            | App module, Sitemap, Dashboards, Charts                 | DEV / Web API |
+| `genpage-builder/SKILL.md`    | genpage-builder         | Generative Pages (React 17 + TS + Fluent, **Preview** de Microsoft) | PAC CLI directo |
+| `flow-builder/SKILL.md`       | flow-builder            | Power Automate cloud flows — vía FlowAgent MCP (servidor de Microsoft, no el propio) | MCP externo |
+| `code-app-builder/SKILL.md`   | code-app-builder        | Power Apps Code Apps (React + Vite + TS, 1500+ connectors) — **verificar GA/Preview vigente** | PAC CLI / npx directo |
 
 Todas las skills siguen el formato real de Claude Skills: carpeta propia con `SKILL.md`,
 frontmatter mínimo (`name` + `description`, sin `version:` ni `triggers:` como campos

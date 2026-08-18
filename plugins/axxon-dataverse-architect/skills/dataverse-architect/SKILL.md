@@ -20,8 +20,9 @@ Coordinás el trabajo de un arquitecto de soluciones que construye sobre **Micro
 y Dynamics 365 CE**, usando Cowork como entorno de ejecución. No ejecutás las operaciones
 técnicas vos mismo — cada skill específica (`entity-builder`, `form-designer`,
 `business-rule-engine`, `view-designer`, `duplicate-detection`, `security-architect`,
-`config-generator`, `solution-packager`) tiene sus propios MCP tools y reglas. Esta skill fija
-lo que es común a todas.
+`config-generator`, `solution-packager`, `app-composer`, `genpage-builder`, `flow-builder`,
+`code-app-builder`) tiene sus propios MCP tools y reglas. Esta skill fija lo que es común a
+todas.
 
 ---
 
@@ -46,9 +47,12 @@ no hace falta configuración adicional más allá de tenerlo agregado en Customi
 
 | Canal | Cuándo aplica | Skill(s) |
 |---|---|---|
-| **DEV / Web API** | Crear o iterar: tablas, columnas, relaciones, forms, business rules, vistas, alternate keys, duplicate detection rules, definición de environment variables — siempre contra el environment DEV del proyecto activo | `entity-builder`, `form-designer`, `business-rule-engine`, `view-designer`, `duplicate-detection`, `config-generator` (definición) |
+| **DEV / Web API** | Crear o iterar: tablas, columnas, relaciones, forms, business rules, vistas, alternate keys, duplicate detection rules, definición de environment variables, App module/Sitemap/Dashboards/Charts — siempre contra el environment DEV del proyecto activo | `entity-builder`, `form-designer`, `business-rule-engine`, `view-designer`, `duplicate-detection`, `config-generator` (definición), `app-composer` |
 | **Git** | Seguridad (roles, BU, teams, field security), valores de Environment Variables / Connection References por ambiente | `security-architect`, `config-generator` (settings) |
 | **Pipeline** | Promoción DEV→TEST, TEST→PROD, exportación versionada | `solution-packager` |
+| **PAC CLI directo** | Generative Pages (React/TS/Fluent) — feature en Preview de Microsoft, deploy directo al environment vía `pac model genpage`, la promoción posterior a TEST/PROD igual pasa por el canal Pipeline una vez creada | `genpage-builder` |
+| **PAC CLI / npx directo** | Power Apps Code Apps — scaffolding con `npx degit`, deploy con `npx power-apps push`, verificar estado GA/Preview vigente antes de comprometerse con el cliente | `code-app-builder` |
+| **MCP externo (FlowAgent)** | Power Automate cloud flows — servidor MCP oficial de Microsoft, distinto del D365 Architect MCP Server propio de Axxon; verificar que el connector `flowagent` esté agregado en Cowork antes de asumir disponibilidad | `flow-builder` |
 
 **Regla dura, sin excepción:** ninguna operación importa una solución contra TEST o PROD
 directamente, ni siquiera si Cowork tiene PAC CLI instalado localmente y técnicamente
@@ -102,6 +106,11 @@ ADR-003, pendiente).
 | Valores por ambiente, deployment settings | `config-generator` | Git |
 | Crear solución, agregar componentes, versionar | `solution-packager` | DEV / Web API |
 | Exportar, promover a TEST/PROD, estado de pipeline | `solution-packager` | Pipeline |
+| App module, sitemap, navegación de la app | `app-composer` | DEV / Web API |
+| Dashboard, chart, visualización | `app-composer` | DEV / Web API |
+| Generative page, genpage, página React custom | `genpage-builder` | PAC CLI directo |
+| Code App, app pro-code, connector fuera de Dataverse | `code-app-builder` | PAC CLI / npx directo |
+| Flow, Power Automate, automatización, notificación vía connector | `flow-builder` | MCP externo (FlowAgent) |
 
 Si el pedido mezcla varias operaciones ("creá la tabla, el form, y bloqueá el campo monto si
 el estado es Aprobada"), descomponelo y secuencialo en orden de dependencia — tabla → columnas
