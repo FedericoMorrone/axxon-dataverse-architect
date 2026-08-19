@@ -21,8 +21,8 @@ y Dynamics 365 CE**, usando Cowork como entorno de ejecución. No ejecutás las 
 técnicas vos mismo — cada skill específica (`entity-builder`, `form-designer`,
 `business-rule-engine`, `view-designer`, `duplicate-detection`, `security-architect`,
 `config-generator`, `solution-packager`, `app-composer`, `genpage-builder`, `flow-builder`,
-`code-app-builder`) tiene sus propios MCP tools y reglas. Esta skill fija lo que es común a
-todas.
+`code-app-builder`, `plugin-builder`, `custom-api-builder`, `azure-function-builder`) tiene
+sus propios MCP tools y reglas. Esta skill fija lo que es común a todas.
 
 ---
 
@@ -53,6 +53,9 @@ no hace falta configuración adicional más allá de tenerlo agregado en Customi
 | **PAC CLI directo** | Generative Pages (React/TS/Fluent) — feature en Preview de Microsoft, deploy directo al environment vía `pac model genpage`, la promoción posterior a TEST/PROD igual pasa por el canal Pipeline una vez creada | `genpage-builder` |
 | **PAC CLI / npx directo** | Power Apps Code Apps — scaffolding con `npx degit`, deploy con `npx power-apps push`, verificar estado GA/Preview vigente antes de comprometerse con el cliente | `code-app-builder` |
 | **MCP externo (FlowAgent)** | Power Automate cloud flows — servidor MCP oficial de Microsoft, distinto del D365 Architect MCP Server propio de Axxon; verificar que el connector `flowagent` esté agregado en Cowork antes de asumir disponibilidad | `flow-builder` |
+| **Git (código compilado)** | Plugins C#/.NET — código fuente versionado, PR review antes de registrar, nunca directo contra DEV | `plugin-builder` |
+| **DEV / Web API** *(agregado a la fila de arriba)* | Definición del contrato de un Custom API (metadata, no la implementación) | `custom-api-builder` |
+| **Azure CLI / Functions Core Tools** | Build y deploy de Azure Functions — DEV directo permitido, PROD **siempre** vía Pipeline con gate humano (mismo criterio que `solution-packager`), contra la suscripción de `.d365-project.md` | `azure-function-builder` |
 
 **Regla dura, sin excepción:** ninguna operación importa una solución contra TEST o PROD
 directamente, ni siquiera si Cowork tiene PAC CLI instalado localmente y técnicamente
@@ -92,6 +95,37 @@ ADR-003, pendiente).
 
 ---
 
+## Análisis de alcance al recibir una User Story — antes de rutear a cualquier skill
+
+Cuando el trabajo arranca desde una **Historia de Usuario real** (la que armó
+`d365-requirements-analyst` en Fase 1, con Descripción, Tareas, Criterios de Aceptación en
+Gherkin, y Consideraciones D365 — ya sea porque el usuario la pega, o porque la leyó de Azure
+DevOps), **no rutees directo a la primera skill obvia**. Primero analizá el alcance completo:
+
+1. **Leé toda la Historia**, no solo el título — el patrón que se busca evitar es rutear a
+   `entity-builder` porque la Descripción menciona una tabla, sin notar que las
+   Consideraciones D365 ya adelantan que hace falta una integración externa.
+2. **Detectá cadenas de dependencia entre skills**, no solo una skill aislada. La más común y
+   la que más se pasa por alto: **Custom API → Plugin → Azure Function**. Preguntas que
+   tenés que hacerte explícitamente:
+   - ¿La Historia necesita exponer una operación custom (no CRUD estándar)? → `custom-api-builder`.
+   - ¿Esa operación (o cualquier lógica mencionada) necesita ejecutar código server-side
+     transaccional? → `plugin-builder`.
+   - ¿Ese plugin necesita hablar con un sistema externo (una API de terceros, otro servicio)?
+     → **no metas esa llamada HTTP dentro del plugin sync** (ver restricción explícita en
+     `plugin-builder`) — necesitás `azure-function-builder` para la pieza de integración, y el
+     plugin la llama de forma async.
+3. **Mostrale el plan completo al usuario antes de ejecutar el primer paso** — cuántas skills
+   están involucradas, en qué orden, y por qué (ej. "esto necesita Custom API + Plugin +
+   Azure Function, porque la validación de crédito tiene que consultar un sistema externo").
+   Nunca arranques a construir la primera pieza sin haber mostrado el alcance completo primero
+   — el usuario tiene que poder frenarte si el alcance que inferiste está mal.
+4. Si después de leer la Historia completa **no está claro** si hace falta esta cadena (ej. no
+   queda claro si la integración es sync u async, o si el sistema externo ya tiene un
+   connector estándar que resolvería esto con `flow-builder` en vez de código custom),
+   preguntá antes de asumir — no default a la opción más compleja (Plugin + Azure Function)
+   si un Business Rule o un flow alcanzan.
+
 ## Routing a skills específicas
 
 | Intención detectada | Skill | Canal |
@@ -111,10 +145,16 @@ ADR-003, pendiente).
 | Generative page, genpage, página React custom | `genpage-builder` | PAC CLI directo |
 | Code App, app pro-code, connector fuera de Dataverse | `code-app-builder` | PAC CLI / npx directo |
 | Flow, Power Automate, automatización, notificación vía connector | `flow-builder` | MCP externo (FlowAgent) |
+| Plugin, step, pre-operation, post-operation, lógica server-side transaccional | `plugin-builder` | Git |
+| Custom API, custom action, mensaje custom, endpoint tipado | `custom-api-builder` | DEV / Web API |
+| Azure Function, webhook, middleware, integración externa custom | `azure-function-builder` | Azure CLI / Functions Core Tools |
 
 Si el pedido mezcla varias operaciones ("creá la tabla, el form, y bloqueá el campo monto si
 el estado es Aprobada"), descomponelo y secuencialo en orden de dependencia — tabla → columnas
 → vista/form → business rule → seguridad — mostrando el plan antes de ejecutar el primer paso.
+Si el pedido viene de una User Story completa (no una frase suelta), aplicá primero el
+análisis de la sección anterior — la cadena Custom API → Plugin → Azure Function no siempre
+es obvia desde el título de la Historia.
 
 ---
 

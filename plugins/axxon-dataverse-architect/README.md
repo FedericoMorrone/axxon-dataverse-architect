@@ -1,4 +1,4 @@
-# Axxon Dataverse Architect — Paquete de Skills (v1.2.0-rc1)
+# Axxon Dataverse Architect — Paquete de Skills (v1.3.0-rc1)
 
 Skills de **Claude Cowork** especializadas en la construcción de soluciones sobre
 **Microsoft Dataverse y Dynamics 365 CE** para Solution Architects.
@@ -38,6 +38,9 @@ Skills de **Claude Cowork** especializadas en la construcción de soluciones sob
 | `genpage-builder/SKILL.md`    | genpage-builder         | Generative Pages (React 17 + TS + Fluent, **Preview** de Microsoft) | PAC CLI directo |
 | `flow-builder/SKILL.md`       | flow-builder            | Power Automate cloud flows — vía FlowAgent MCP (servidor de Microsoft, no el propio) | MCP externo |
 | `code-app-builder/SKILL.md`   | code-app-builder        | Power Apps Code Apps (React + Vite + TS, 1500+ connectors) — **verificar GA/Preview vigente** | PAC CLI / npx directo |
+| `plugin-builder/SKILL.md`     | plugin-builder          | Plugins C#/.NET — steps, mensajes, sync/async, filtering attributes, images | Git |
+| `custom-api-builder/SKILL.md` | custom-api-builder      | Custom APIs (contrato: Action/Function, parámetros) — implementación va en `plugin-builder` | DEV / Web API |
+| `azure-function-builder/SKILL.md` | azure-function-builder | Azure Functions — integración externa, deploy DEV directo, PROD vía Pipeline con gate | Azure CLI / Functions Core Tools |
 
 Todas las skills siguen el formato real de Claude Skills: carpeta propia con `SKILL.md`,
 frontmatter mínimo (`name` + `description`, sin `version:` ni `triggers:` como campos

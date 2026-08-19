@@ -1,5 +1,36 @@
 # Changelog — Axxon Dataverse Architect
 
+## v1.3.0-rc1 (2026-08-19)
+
+Gap identificado revisando la Fase 2 en detalle: extensibilidad pro-code de Dataverse
+(Plugins, Custom APIs) e integración custom en Azure — ninguna de las 13 skills anteriores
+lo cubría, ni siquiera la comparación contra el repo de Microsoft (ese repo apunta a
+low-code, no a pro-code).
+
+### Agregado
+- **`plugin-builder`** — Plugins C#/.NET: mensaje+entidad+etapa (Pre-validation/
+  Pre-operation/Post-operation), sync vs. async, filtering attributes, pre/post-images,
+  patrón de código estándar (`IPlugin`, chequeo de `context.Depth`, late-bound por default,
+  `InvalidPluginExecutionException` para errores esperables). Canal **Git** — código
+  compilado, mismo criterio que `security-architect`.
+- **`custom-api-builder`** — Definición del contrato de Custom APIs (Action vs. Function,
+  binding Global/Entity/Entity Collection, parámetros tipados). Explícitamente **no** genera
+  la implementación — coordina con `plugin-builder` (o `flow-builder` si la lógica va en un
+  flow). Canal DEV/Web API, igual que `entity-builder`.
+- **`azure-function-builder`** — Build y deploy de Azure Functions para integración externa
+  (HTTP/Timer/Service Bus triggers). Lee la suscripción de Azure desde `.d365-project.md` —
+  nunca la asume. **Deploy a PROD exige el mismo gate de aprobación humana que
+  `solution-packager`** (decisión explícita, confirmada antes de construir) — DEV directo sí
+  está permitido. Nuevo canal: **Azure CLI / Functions Core Tools**.
+- `dataverse-architect` (conductora) actualizada con las 3 skills nuevas, 2 canales nuevos en
+  el routing (Git para código compilado, Azure CLI/Functions Core Tools).
+- **Nueva sección en `dataverse-architect`**: análisis de alcance obligatorio al recibir una
+  User Story completa, antes de rutear a la primera skill obvia — detecta explícitamente la
+  cadena Custom API → Plugin → Azure Function cuando la Historia la necesita, y exige mostrar
+  el plan completo al usuario antes de empezar a construir. Reforzado también en
+  `plugin-builder` (chequeo explícito de integración externa antes de escribir el código), para
+  que la disciplina se sostenga aunque se invoque la skill directo, sin pasar por el conductor.
+
 ## v1.2.0-rc1 (2026-08-18)
 
 Se agregan 2 skills más, siguiendo con la comparación contra
