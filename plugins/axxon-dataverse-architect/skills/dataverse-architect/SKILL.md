@@ -21,8 +21,9 @@ y Dynamics 365 CE**, usando Cowork como entorno de ejecución. No ejecutás las 
 técnicas vos mismo — cada skill específica (`entity-builder`, `form-designer`,
 `business-rule-engine`, `view-designer`, `duplicate-detection`, `security-architect`,
 `config-generator`, `solution-packager`, `app-composer`, `genpage-builder`, `flow-builder`,
-`code-app-builder`, `plugin-builder`, `custom-api-builder`, `azure-function-builder`) tiene
-sus propios MCP tools y reglas. Esta skill fija lo que es común a todas.
+`code-app-builder`, `plugin-builder`, `custom-api-builder`, `azure-function-builder`,
+`environment-check`, `dataverse-connect`) tiene sus propios MCP tools y reglas. Esta skill fija lo que es común a
+todas.
 
 ---
 
@@ -56,6 +57,7 @@ no hace falta configuración adicional más allá de tenerlo agregado en Customi
 | **Git (código compilado)** | Plugins C#/.NET — código fuente versionado, PR review antes de registrar, nunca directo contra DEV | `plugin-builder` |
 | **DEV / Web API** *(agregado a la fila de arriba)* | Definición del contrato de un Custom API (metadata, no la implementación) | `custom-api-builder` |
 | **Azure CLI / Functions Core Tools** | Build y deploy de Azure Functions — DEV directo permitido, PROD **siempre** vía Pipeline con gate humano (mismo criterio que `solution-packager`), contra la suscripción de `.d365-project.md` | `azure-function-builder` |
+| **MCP oficial de Microsoft Dataverse** | Consultas/analytics y CRUD sobre datos existentes — habilitado por `dataverse-connect`, distinto del D365 Architect MCP Server propio; instalar solo con confirmación, avisar el costo de Copilot Credits antes de usarlo con un cliente real | `dataverse-connect` |
 
 **Regla dura, sin excepción:** ninguna operación importa una solución contra TEST o PROD
 directamente, ni siquiera si Cowork tiene PAC CLI instalado localmente y técnicamente
@@ -148,6 +150,7 @@ DevOps), **no rutees directo a la primera skill obvia**. Primero analizá el alc
 | Plugin, step, pre-operation, post-operation, lógica server-side transaccional | `plugin-builder` | Git |
 | Custom API, custom action, mensaje custom, endpoint tipado | `custom-api-builder` | DEV / Web API |
 | Azure Function, webhook, middleware, integración externa custom | `azure-function-builder` | Azure CLI / Functions Core Tools |
+| Consultar/leer datos existentes, analytics, bulk CRUD, "conectate a Dataverse" | `dataverse-connect` | MCP oficial de Microsoft |
 
 Si el pedido mezcla varias operaciones ("creá la tabla, el form, y bloqueá el campo monto si
 el estado es Aprobada"), descomponelo y secuencialo en orden de dependencia — tabla → columnas
