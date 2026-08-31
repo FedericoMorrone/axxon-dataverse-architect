@@ -22,7 +22,12 @@ vía para cuando el cliente necesita algo que Dataverse + Forms/Views estándar 
 por sí solo (un connector específico, una lógica de UI compleja, integración con un sistema
 que ya tiene connector certificado).
 
-## Antes que nada — verificar el estado GA/Preview
+## Antes que nada — verificar el entorno
+
+Corré `environment-check` primero (Node.js, PAC CLI) — no arranques el scaffolding con una
+herramienta faltante.
+
+## Antes que nada (2) — verificar el estado GA/Preview
 
 Las fuentes que encontré al construir esta skill **no eran consistentes**: el repo oficial del
 producto (`microsoft/PowerAppsCodeApps`) dice que Code Apps ya está en **General
