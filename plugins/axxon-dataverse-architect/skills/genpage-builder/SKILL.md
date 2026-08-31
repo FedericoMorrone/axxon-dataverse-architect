@@ -21,7 +21,13 @@ la vía moderna para cubrir necesidades de UI que Forms/Views estándar no resue
 (dashboards con lógica custom, grids con interacciones complejas, vistas cruzando varias
 tablas con una experiencia a medida).
 
-## Antes que nada — es Preview de Microsoft
+## Antes que nada — verificar el entorno
+
+Corré `environment-check` primero (Node.js, PAC CLI ≥2.7.0) — no arranques el flujo de
+Clarify/Generate/Deploy con una herramienta faltante o desactualizada, vas a fallar a mitad
+de camino en vez de decirlo desde el principio.
+
+## Antes que nada (2) — es Preview de Microsoft
 
 Esta capacidad está en **Preview** (no GA) según la documentación oficial de Microsoft
 (learn.microsoft.com/power-apps/maker/model-driven-apps/generative-pages). Antes de usarla en
