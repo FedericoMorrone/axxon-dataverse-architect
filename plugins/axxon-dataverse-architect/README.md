@@ -1,4 +1,4 @@
-# Axxon Dataverse Architect — Paquete de Skills (v1.3.0-rc1)
+# Axxon Dataverse Architect — Paquete de Skills (v1.5.0-rc1)
 
 Skills de **Claude Cowork** especializadas en la construcción de soluciones sobre
 **Microsoft Dataverse y Dynamics 365 CE** para Solution Architects.
@@ -41,6 +41,8 @@ Skills de **Claude Cowork** especializadas en la construcción de soluciones sob
 | `plugin-builder/SKILL.md`     | plugin-builder          | Plugins C#/.NET — steps, mensajes, sync/async, filtering attributes, images | Git |
 | `custom-api-builder/SKILL.md` | custom-api-builder      | Custom APIs (contrato: Action/Function, parámetros) — implementación va en `plugin-builder` | DEV / Web API |
 | `azure-function-builder/SKILL.md` | azure-function-builder | Azure Functions — integración externa, deploy DEV directo, PROD vía Pipeline con gate | Azure CLI / Functions Core Tools |
+| `environment-check/SKILL.md` | environment-check | Verifica Node.js/PAC CLI/Azure CLI/Functions Core Tools antes de las 3 skills de arriba — nunca instala, solo reporta | — (gate previo, no ejecuta nada) |
+| `dataverse-connect/SKILL.md` | dataverse-connect | Instala (con confirmación)/autentica/registra el **MCP oficial de Microsoft Dataverse** — habilita consultas/CRUD que ninguna otra skill cubre. **Avisar costo de Copilot Credits** antes de usar con un cliente real | MCP oficial de Microsoft |
 
 Todas las skills siguen el formato real de Claude Skills: carpeta propia con `SKILL.md`,
 frontmatter mínimo (`name` + `description`, sin `version:` ni `triggers:` como campos
@@ -236,4 +238,4 @@ X.0.0.0  → Release mayor (nueva arquitectura)
 ---
 
 *Generado por Axxon Dataverse Architect — Axxon Consulting*
-*Versión del paquete: 1.0.0-rc1 — Agosto 2026*
+*Versión del paquete: 1.5.0-rc1 — Agosto 2026*
