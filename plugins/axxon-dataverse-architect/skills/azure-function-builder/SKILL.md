@@ -21,7 +21,12 @@ endpoint HTTP que otro sistema necesita llamar.
 
 ---
 
-## Antes de arrancar — leer `.d365-project.md`
+## Antes de arrancar (1) — verificar el entorno
+
+Corré `environment-check` primero (Azure Functions Core Tools, Azure CLI) — no arranques
+`func init` con una herramienta faltante.
+
+## Antes de arrancar (2) — leer `.d365-project.md`
 
 La suscripción de Azure destino ya está definida ahí (sección "Azure — suscripciones") — no
 le preguntes al usuario de nuevo ni asumas una suscripción por default. Si esa sección está
