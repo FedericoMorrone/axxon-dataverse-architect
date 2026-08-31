@@ -1,5 +1,56 @@
 # Changelog — Axxon Dataverse Architect
 
+## v1.5.0-rc1 (2026-08-24)
+
+Se evaluó el plugin oficial de Microsoft `dataverse@claude-plugins-official`
+([microsoft/Dataverse-skills](https://github.com/microsoft/Dataverse-skills), 8 skills:
+`dv-connect`, `dv-metadata`, `dv-data`, `dv-query`, `dv-solution`, `dv-admin`, `dv-security`,
+`dv-overview`). Comparación skill-por-skill contra nuestras 17: 4 de las suyas compiten
+directo con las nuestras (`dv-metadata`≈`entity-builder`+`form-designer`+`view-designer`,
+`dv-solution`≈`solution-packager`, `dv-security`≈`security-architect`,
+`dv-overview`≈`dataverse-architect`), 3 son gap real que no cubríamos (`dv-query`, `dv-data`,
+`dv-admin`), y `dv-connect` es un flujo de onboarding más completo que nuestro
+`environment-check`.
+
+### Agregado
+- **`dataverse-connect`** — adapta el patrón de `dv-connect` (verificar → instalar lo que
+  falte → autenticar → registrar MCP), pero **sin instalar el plugin completo de Microsoft**
+  — evita traer las 4 skills que competirían con las nuestras en el routing. Registra
+  específicamente el **MCP oficial de Microsoft Dataverse** (distinto del D365 Architect MCP
+  Server propio, ADR-002), habilitando consultas/analytics/CRUD sobre datos existentes — el
+  hueco real que sí encontramos.
+- Separada de `environment-check` a propósito — esa skill tiene la garantía fuerte de "nunca
+  instala nada"; `dataverse-connect` sí instala (con confirmación explícita del usuario, a
+  diferencia del `dv-connect` original que instala directo).
+- **Advertencia de costo explícita en la skill**: desde el 15 de diciembre de 2025, las tools
+  del MCP de Dataverse están medidas por Copilot Credits fuera de Microsoft Copilot Studio —
+  incluye Claude Code/Cowork. La skill exige avisar esto antes de usarla con un cliente real.
+
+## v1.4.0-rc1 (2026-08-20)
+
+Se revisaron 3 skills de un repo de **Antigravity** (otro framework de agentes, no Claude
+Code) que el usuario compartió para evaluar si aplicaban a nuestra arquitectura —
+`devops-login.md`, `devops-workitem-reader.md`, `orchestration.md`.
+
+### Análisis (documentado, no todo se adoptó)
+- El mecanismo de autenticación de `devops-login.md` (Azure CLI + Device Code flow, recarga
+  manual de PATH, rutas de fallback hardcodeadas para Windows) **no se adoptó** — ya está
+  superado por nuestro propio ADR-001 (servidor MCP oficial de Azure DevOps), que no necesita
+  nada de esa complejidad. Se encontraron además 2 bugs reales en esa skill (contradicción
+  interna Edge/Chrome, y un username de Windows hardcodeado en un path de script) — no
+  replicados acá.
+- El patrón de `orchestration.md` (verificación de entorno con reporte consolidado y gate de
+  autorización explícito antes de cualquier workflow) **sí se adoptó**, adaptado.
+
+### Agregado
+- **`environment-check`** — verifica Node.js, PAC CLI (≥2.7.0 para `genpage-builder`), Azure
+  Functions Core Tools, y Azure CLI antes de que `genpage-builder`/`code-app-builder`/
+  `azure-function-builder` arranquen. Nunca instala nada — reporta un consolidado y espera
+  confirmación. Sin rutas hardcodeadas de fallback (lección aprendida del bug encontrado en
+  la skill de Antigravity).
+- Conectada como paso previo explícito en las 3 skills que la necesitan, y sumada al
+  conductor `dataverse-architect`.
+
 ## v1.3.0-rc1 (2026-08-19)
 
 Gap identificado revisando la Fase 2 en detalle: extensibilidad pro-code de Dataverse
