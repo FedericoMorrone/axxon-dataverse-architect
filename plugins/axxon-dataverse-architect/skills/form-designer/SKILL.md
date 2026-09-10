@@ -22,7 +22,7 @@ Siempre usa el MCP Dataverse Disponible en el agente.
 ## MCP Tools disponibles
 
 | Tool name            | Método HTTP | Endpoint Dataverse                                                        |
-|----------------------|-------------|---------------------------------------------------------------------------|
+|----------------------|-------------|-----------------------------------------------------------------------------|
 | `list_forms`         | GET         | `/api/data/v9.2/systemforms?$filter=objecttypecode eq 'xxx'`              |
 | `get_form`           | GET         | `/api/data/v9.2/systemforms(<formid>)`                                    |
 | `create_form`        | POST        | `/api/data/v9.2/systemforms`                                              |
@@ -35,7 +35,7 @@ Siempre usa el MCP Dataverse Disponible en el agente.
 ## Tipos de formularios
 
 | `type` value | Tipo           | Cuándo usar                                              |
-|--------------|----------------|----------------------------------------------------------|
+|--------------|----------------|------------------------------------------------------------|
 | `2`          | Main           | Formulario principal de la tabla — el más completo       |
 | `6`          | Quick View     | Vista embebida de un registro relacionado en otro form   |
 | `7`          | Quick Create   | Form simplificado para creación rápida (lateral)         |
@@ -66,7 +66,7 @@ Un formulario de D365 CE tiene la siguiente jerarquía:
 ### Atributos críticos del FormXml
 
 | Elemento   | Atributo clave     | Descripción                                               |
-|------------|--------------------|-----------------------------------------------------------|
+|------------|--------------------|-------------------------------------------------------------|
 | `<form>`   | `name`             | Nombre del form                                           |
 | `<tab>`    | `id`, `name`, `visible` | GUID, nombre interno, visibilidad inicial           |
 | `<section>`| `id`, `name`, `columns`  | GUID, nombre, número de columnas de layout (1-3)   |
@@ -78,7 +78,7 @@ Un formulario de D365 CE tiene la siguiente jerarquía:
 ## Class IDs de controles frecuentes
 
 | Tipo de control          | `classid`                                      |
-|--------------------------|------------------------------------------------|
+|--------------------------|--------------------------------------------------|
 | Text / Number / DateTime | `{4273B735-4538-468D-838D-C2D56C689AD5}`       |
 | OptionSet / Choice       | `{3EF39988-22BB-4F0B-BBBE-64B5A3748AEE}`       |
 | Lookup                   | `{270BD3DB-D9AF-4782-9025-509E298DEC0A}`        |
@@ -98,7 +98,7 @@ Un formulario de D365 CE tiene la siguiente jerarquía:
 Solicitá al usuario:
 
 | Input                  | Descripción                                           | Ejemplo                      |
-|------------------------|-------------------------------------------------------|------------------------------|
+|------------------------|---------------------------------------------------------|-------------------------------|
 | `tableName`            | Logical name de la tabla                              | `axx_creditsolicitud`      |
 | `formName`             | Nombre del formulario                                 | `Solicitud de Crédito - Main`|
 | `formType`             | Tipo de form (Main, Quick Create, etc.)               | `Main`                       |
@@ -293,7 +293,7 @@ Sin embargo, podés ocultar un campo **incondicionalmente** seteando el tab o se
 ## Buenas prácticas de diseño de formularios
 
 | Práctica                                           | Razón                                                   |
-|----------------------------------------------------|---------------------------------------------------------|
+|------------------------------------------------------|-----------------------------------------------------------|
 | No más de 5 tabs en un Main form                   | UX — el usuario no scrollea más allá del tercer tab     |
 | Secciones con máximo 10 campos                     | Legibilidad                                             |
 | Header con 2-4 campos clave (estado, nombre, fecha)| Siempre visibles sin scrollear                          |
@@ -301,6 +301,22 @@ Sin embargo, podés ocultar un campo **incondicionalmente** seteando el tab o se
 | Campos obligatorios en la sección superior         | El usuario los ve primero                               |
 | Subgrids en tab propio cuando tienen muchas filas  | Evita que el form "pese" visualmente                    |
 | `isdefault: true` solo en un form por tabla        | Más de uno como default genera comportamiento errático  |
+
+---
+
+## Confirmar la solución activa antes de agregar el componente
+
+Antes de llamar `add_to_solution`, confirmá cuál es la solución correcta — nunca asumas el
+nombre de un ejemplo de esta documentación ni tomes la primera que aparezca:
+
+1. Buscá el campo `Solución` en `.d365-session.md` (el conductor `dataverse-architect` lo
+   mantiene) — si está seteado, usalo directo, no vuelvas a preguntar.
+2. Si el archivo no existe, el campo está vacío, o hay motivo para pensar que puede haber más
+   de una solución candidata en este environment, llamá `list_solutions` (de
+   `solution-packager`) y preguntale al usuario explícitamente cuál corresponde — nunca
+   elijas por tu cuenta ni asumas la primera de la lista.
+3. Los nombres de solución en los ejemplos de este documento (`ClienteXCreditOnboarding`,
+   `AxxonClienteXCreditOnboarding`) son ilustrativos — nunca los uses como si fueran reales.
 
 ---
 
