@@ -21,7 +21,7 @@ del MCP Server, y siempre dentro de una **solución no administrada** activa.
 ## MCP Tools disponibles
 
 | Tool name              | Método HTTP | Endpoint Dataverse                                                    |
-|------------------------|-------------|-----------------------------------------------------------------------|
+|------------------------|-------------|-------------------------------------------------------------------------|
 | `create_table`         | POST        | `/api/data/v9.2/EntityDefinitions`                                    |
 | `get_table`            | GET         | `/api/data/v9.2/EntityDefinitions(LogicalName='xxx')`                 |
 | `list_tables`          | GET         | `/api/data/v9.2/EntityDefinitions?$select=LogicalName,DisplayName`    |
@@ -61,7 +61,7 @@ output-formatter presenta resultado (ac-status-card)
 ### Inputs requeridos
 
 | Input               | Descripción                                              | Ejemplo                    |
-|---------------------|----------------------------------------------------------|----------------------------|
+|---------------------|------------------------------------------------------------|----------------------------|
 | `displayName`       | Nombre legible (singular)                                | `Solicitud de Crédito`     |
 | `displayNamePlural` | Nombre legible (plural)                                  | `Solicitudes de Crédito`   |
 | `logicalName`       | Nombre lógico con prefijo del publisher                  | `axx_creditsolicitud`    |
@@ -91,7 +91,7 @@ output-formatter presenta resultado (ac-status-card)
 ### Mapeo tipo-humano → `@odata.type`
 
 | Tipo pedido por el usuario         | `@odata.type` Metadata API                                        | Notas                                      |
-|------------------------------------|-------------------------------------------------------------------|--------------------------------------------|
+|------------------------------------|---------------------------------------------------------------------|--------------------------------------------|
 | Texto corto                        | `Microsoft.Dynamics.CRM.StringAttributeMetadata`                 | `MaxLength`: 1-4000                        |
 | Texto largo / memo                 | `Microsoft.Dynamics.CRM.MemoAttributeMetadata`                   | `MaxLength`: hasta 1.048.576               |
 | Número entero                      | `Microsoft.Dynamics.CRM.IntegerAttributeMetadata`                | `MinValue`, `MaxValue`                     |
@@ -130,7 +130,7 @@ output-formatter presenta resultado (ac-status-card)
 ### Tipos soportados
 
 | Tipo            | Cuándo usar                                                       | Tool                   |
-|-----------------|-------------------------------------------------------------------|------------------------|
+|-----------------|---------------------------------------------------------------------|------------------------|
 | N:1 (Many-to-One) | Una solicitud tiene un cliente (Contact)                        | `create_relationship`  |
 | 1:N (One-to-Many) | Un cliente tiene muchas solicitudes                            | `create_relationship`  |
 | N:N (Many-to-Many) | Una solicitud puede tener varios garantes (otro approach: tabla intermedia) | `create_relationship` |
@@ -188,6 +188,22 @@ Después de crear o modificar cualquier componente, **siempre** llamás a `add_t
 > de depender de él en un ambiente real, confirmar contra `$metadata` o documentación oficial
 > vigente. Ver también la advertencia equivalente en `04-solution-packager.md` y
 > `09-duplicate-detection.md`.
+
+---
+
+## Confirmar la solución activa antes de agregar el componente
+
+Antes de llamar `add_to_solution`, confirmá cuál es la solución correcta — nunca asumas el
+nombre de un ejemplo de esta documentación ni tomes la primera que aparezca:
+
+1. Buscá el campo `Solución` en `.d365-session.md` (el conductor `dataverse-architect` lo
+   mantiene) — si está seteado, usalo directo, no vuelvas a preguntar.
+2. Si el archivo no existe, el campo está vacío, o hay motivo para pensar que puede haber más
+   de una solución candidata en este environment, llamá `list_solutions` (de
+   `solution-packager`) y preguntale al usuario explícitamente cuál corresponde — nunca
+   elijas por tu cuenta ni asumas la primera de la lista.
+3. Los nombres de solución en los ejemplos de este documento (`ClienteXCreditOnboarding`,
+   `AxxonClienteXCreditOnboarding`) son ilustrativos — nunca los uses como si fueran reales.
 
 ---
 
