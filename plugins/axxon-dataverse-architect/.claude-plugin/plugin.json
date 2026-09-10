@@ -1,7 +1,7 @@
 {
   "name": "axxon-dataverse-architect",
   "displayName": "Axxon Dataverse Architect",
-  "version": "1.5.0-rc1",
+  "version": "1.5.1-rc1",
   "description": "Skills para diseñar y construir soluciones sobre Microsoft Dataverse / Dynamics 365 CE: entidades, columnas, formularios, business rules, vistas, seguridad, detección de duplicados, environment variables, App module/Sitemap/Dashboards, Generative Pages, Power Automate flows, Power Apps Code Apps, Plugins C#/.NET, Custom APIs, Azure Functions, verificación de entorno, y conexión al MCP oficial de Microsoft Dataverse, con promoción ALM vía Azure DevOps. Desarrollado por Axxon Consulting para uso interno del equipo de Solution Architects.",
   "author": {
     "name": "Axxon Consulting"
