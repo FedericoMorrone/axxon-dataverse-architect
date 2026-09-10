@@ -21,7 +21,7 @@ y/o en el servidor (entity scope) sin código.
 ## Cuándo usar Business Rule vs alternativas
 
 | Lógica requerida                                          | Recomendación                  | Razón                                           |
-|-----------------------------------------------------------|--------------------------------|-------------------------------------------------|
+|-------------------------------------------------------------|--------------------------------|-------------------------------------------------|
 | Mostrar/ocultar campo según valor de otro campo           | Business Rule                  | OOB, sin código, se aplica en todos los forms  |
 | Hacer campo obligatorio condicionalmente                  | Business Rule                  | OOB, server + client                           |
 | Set value de un campo según otro                         | Business Rule                  | OOB                                             |
@@ -54,7 +54,7 @@ especificación en JavaScript o Power Automate según corresponda.
 ## Inputs requeridos del usuario
 
 | Input              | Descripción                                              | Ejemplo                                          |
-|--------------------|----------------------------------------------------------|--------------------------------------------------|
+|--------------------|--------------------------------------------------------------|--------------------------------------------------|
 | `tableName`        | Logical name de la tabla donde aplica la regla           | `axx_creditsolicitud`                          |
 | `ruleName`         | Nombre descriptivo de la regla                           | `Monto requerido si estado es Enviada`           |
 | `scope`            | `Entity` (server+client) o `Form` (solo client)          | `Entity`                                         |
@@ -112,7 +112,7 @@ una representación JSON simplificada vía el campo `clientdata`.
 ## Operadores de condición disponibles
 
 | Operador               | `Operator` value          | Tipos de campo compatibles            |
-|------------------------|---------------------------|---------------------------------------|
+|------------------------|----------------------------|-----------------------------------------|
 | Igual a                | `Equal`                   | Todos                                 |
 | No es igual a          | `NotEqual`                | Todos                                 |
 | Contiene datos         | `ContainsData`            | Todos (verifica not null)             |
@@ -130,7 +130,7 @@ una representación JSON simplificada vía el campo `clientdata`.
 ## Tipos de acciones disponibles
 
 | Acción                     | `Type` value       | Descripción                                                        |
-|----------------------------|--------------------|--------------------------------------------------------------------|
+|----------------------------|--------------------|----------------------------------------------------------------------|
 | Hacer campo obligatorio     | `SetRequired`      | `"Value": "required"` o `"none"`                                   |
 | Hacer campo recomendado     | `SetRequired`      | `"Value": "recommended"`                                           |
 | Mostrar / ocultar campo     | `SetVisibility`    | `"Value": "show"` o `"hide"`                                       |
@@ -272,13 +272,30 @@ Las reglas se crean en estado **Draft** (`statecode: 0`). Para activarlas:
 
 ---
 
+## Confirmar la solución activa antes de agregar el componente
+
+Antes de llamar `add_to_solution`, confirmá cuál es la solución correcta — nunca asumas el
+nombre de un ejemplo de esta documentación ni tomes la primera que aparezca:
+
+1. Buscá el campo `Solución` en `.d365-session.md` (el conductor `dataverse-architect` lo
+   mantiene) — si está seteado, usalo directo, no vuelvas a preguntar.
+2. Si el archivo no existe, el campo está vacío, o hay motivo para pensar que puede haber más
+   de una solución candidata en este environment, llamá `list_solutions` (de
+   `solution-packager`) y preguntale al usuario explícitamente cuál corresponde — nunca
+   elijas por tu cuenta ni asumas la primera de la lista.
+3. Los nombres de solución en los ejemplos de otras skills de este paquete
+   (`ClienteXCreditOnboarding`, `AxxonClienteXCreditOnboarding`) son ilustrativos — nunca los
+   uses como si fueran reales.
+
+---
+
 ## Documentación de reglas generada
 
 Después de crear cada Business Rule, la skill genera una tabla de documentación para incluir
 en el Solution Design Document:
 
 | # | Nombre de la Regla                        | Tabla                    | Scope  | Condición                         | Acción (True)                          | Acción (False)               |
-|---|-------------------------------------------|--------------------------|--------|-----------------------------------|----------------------------------------|------------------------------|
+|---|-------------------------------------------|--------------------------|--------|------------------------------------|-----------------------------------------|-------------------------------|
 | 1 | BR - Monto requerido si estado Enviada    | axx_creditsolicitud    | Entity | Estado = Enviada                  | Monto: Obligatorio + ShowError         | Monto: Opcional              |
 | 2 | BR - Bloqueo campos por estado            | axx_creditsolicitud    | Entity | Estado = Aprobada OR Rechazada    | Bloquear: Monto, Plazo, Tasa           | Desbloquear: Monto, Plazo, Tasa |
 
