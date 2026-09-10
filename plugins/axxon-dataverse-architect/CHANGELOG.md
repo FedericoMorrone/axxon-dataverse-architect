@@ -1,5 +1,31 @@
 # Changelog — Axxon Dataverse Architect
 
+## v1.5.1-rc1 (2026-09-10)
+
+Se encontró un gap real preguntando explícitamente si el agente podía crear soluciones,
+elegir entre soluciones existentes, y crear elementos dentro de una solución determinada.
+Verificado contra el código real de las 4 skills que llaman `add_to_solution` directamente
+(no de memoria): `entity-builder`, `form-designer`, `view-designer`, `business-rule-engine`.
+
+### Corregido
+- **Ninguna de las 4 skills decía de dónde sale el `SolutionUniqueName`** — cada una mostraba
+  el payload de `add_to_solution` con un nombre de ejemplo hardcodeado
+  (`ClienteXCreditOnboarding`/`AxxonClienteXCreditOnboarding`), sin instrucción de leer
+  `.d365-session.md`, ni de qué hacer si hay más de una solución candidata en el environment.
+  El conductor (`dataverse-architect`) sí mantiene ese contexto, pero las skills que ejecutan
+  la escritura real no tenían instrucción propia — dependían implícitamente de que el
+  conductor se los pasara, sin fallback si eso no pasaba.
+- Agregada una sección "Confirmar la solución activa antes de agregar el componente" idéntica
+  en las 4 skills: leer `.d365-session.md` primero; si falta, está vacío, o hay ambigüedad
+  real, llamar `list_solutions` (`solution-packager`) y preguntarle al usuario explícitamente
+  — nunca asumir ni tomar la primera de la lista.
+- **`duplicate-detection`, `app-composer`, y `custom-api-builder` no necesitaron el mismo fix**
+  — verificado que no llaman `add_to_solution` directamente (los dos primeros delegan en
+  `solution-packager`; `custom-api-builder` no agrega el componente a ninguna solución
+  todavía, un gap distinto y menor, pendiente de revisar aparte).
+- **Confirmado que sí puede crear soluciones**: `solution-packager.create_solution` ya
+  cubre esto, con publisher, nombre único, y versión inicial — sin cambios necesarios ahí.
+
 ## v1.5.0-rc1 (2026-08-24)
 
 Se evaluó el plugin oficial de Microsoft `dataverse@claude-plugins-official`
