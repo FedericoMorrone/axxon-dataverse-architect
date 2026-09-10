@@ -205,6 +205,22 @@ subgrid en el FormXml.
 
 ---
 
+## Confirmar la solución activa antes de agregar el componente
+
+Antes de llamar `add_to_solution`, confirmá cuál es la solución correcta — nunca asumas el
+nombre de un ejemplo de esta documentación ni tomes la primera que aparezca:
+
+1. Buscá el campo `Solución` en `.d365-session.md` (el conductor `dataverse-architect` lo
+   mantiene) — si está seteado, usalo directo, no vuelvas a preguntar.
+2. Si el archivo no existe, el campo está vacío, o hay motivo para pensar que puede haber más
+   de una solución candidata en este environment, llamá `list_solutions` (de
+   `solution-packager`) y preguntale al usuario explícitamente cuál corresponde — nunca
+   elijas por tu cuenta ni asumas la primera de la lista.
+3. Los nombres de solución en los ejemplos de este documento (`ClienteXCreditOnboarding`,
+   `AxxonClienteXCreditOnboarding`) son ilustrativos — nunca los uses como si fueran reales.
+
+---
+
 ## Restricciones
 
 - **Nunca** modificar vistas de entidades OOB (Account, Contact, Lead, etc.) sin verificar que
