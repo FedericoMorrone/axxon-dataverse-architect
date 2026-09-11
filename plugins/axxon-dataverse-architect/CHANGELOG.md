@@ -1,5 +1,21 @@
 # Changelog — Axxon Dataverse Architect
 
+## Pendiente registrado (2026-09-10) — sin cambio de versión
+
+Se decidió **pausar** el análisis de adoptar más ampliamente las skills oficiales de
+Microsoft ([microsoft/Dataverse-skills](https://github.com/microsoft/Dataverse-skills)) para
+construir piezas en Dataverse. Lo ya resuelto en v1.5.0-rc1 (`dataverse-connect`, habilitando
+el MCP oficial solo para el gap real de consultas/CRUD/bulk data) se mantiene sin cambios.
+
+### Queda en pausa, explícitamente
+- Evaluar si conviene migrar (parcial o totalmente) a `dv-metadata`/`dv-solution`/
+  `dv-security`/`dv-overview` en vez de mantener `entity-builder`+`form-designer`+
+  `view-designer`/`solution-packager`/`security-architect`/`dataverse-architect` propios.
+- Profundizar el uso de `dv-query`/`dv-data`/`dv-admin` más allá del acceso que ya habilita
+  `dataverse-connect` al MCP oficial.
+- El gap menor ya anotado en v1.5.1-rc1 sobre `custom-api-builder` (no agrega el Custom API a
+  ninguna solución todavía) — sigue pendiente de revisar aparte.
+
 ## v1.5.1-rc1 (2026-09-10)
 
 Se encontró un gap real preguntando explícitamente si el agente podía crear soluciones,
