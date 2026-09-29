@@ -1,20 +1,53 @@
 # Changelog — Axxon Dataverse Architect
 
-## Pendiente registrado (2026-09-10) — sin cambio de versión
+## v1.6.0-rc1 (2026-09-29)
 
-Se decidió **pausar** el análisis de adoptar más ampliamente las skills oficiales de
-Microsoft ([microsoft/Dataverse-skills](https://github.com/microsoft/Dataverse-skills)) para
-construir piezas en Dataverse. Lo ya resuelto en v1.5.0-rc1 (`dataverse-connect`, habilitando
-el MCP oficial solo para el gap real de consultas/CRUD/bulk data) se mantiene sin cambios.
+Se retoma, a pedido explícito y puntual, uno de los 3 ítems que habían quedado en pausa el
+2026-09-10: migrar `solution-packager` para usar el enfoque real de `dv-solution`
+(`microsoft/Dataverse-skills`). Los otros 2 ítems (`dv-metadata`/`dv-security`/`dv-overview`,
+y profundizar `dv-query`/`dv-data`/`dv-admin`) **siguen en pausa**, sin cambios.
 
-### Queda en pausa, explícitamente
-- Evaluar si conviene migrar (parcial o totalmente) a `dv-metadata`/`dv-solution`/
-  `dv-security`/`dv-overview` en vez de mantener `entity-builder`+`form-designer`+
-  `view-designer`/`solution-packager`/`security-architect`/`dataverse-architect` propios.
-- Profundizar el uso de `dv-query`/`dv-data`/`dv-admin` más allá del acceso que ya habilita
-  `dataverse-connect` al MCP oficial.
-- El gap menor ya anotado en v1.5.1-rc1 sobre `custom-api-builder` (no agrega el Custom API a
-  ninguna solución todavía) — sigue pendiente de revisar aparte.
+### Conflicto real encontrado y resuelto antes de escribir nada
+`dv-solution`, en su diseño original, importa una solución **directo a cualquier
+environment** (DEV, TEST, o PROD) una vez confirmado contra cuál se está trabajando — sin
+ningún concepto de pipeline ni gate de aprobación humana. Esto contradice directamente la
+garantía central de este paquete (nunca a TEST/PROD fuera del pipeline). Se resolvió como
+**híbrido**, confirmado explícitamente con el usuario antes de tocar código: se adoptaron las
+técnicas de `dv-solution` para el canal DEV, y el canal Pipeline (gate humano obligatorio)
+**se mantuvo exactamente como estaba, intocado**.
+
+### Cambiado
+- **`solution-packager` — canal DEV reemplazado por completo.** Antes llamaba MCP tools
+  contra nuestro propio Azure Function (`create_publisher`, `create_solution`, etc., vía HTTP
+  crudo). Ahora usa el **SDK de Python** para crear publisher/solución (evita bugs de URL
+  encoding y parsing de GUID) y **PAC CLI directo** para agregar componentes
+  (`add-solution-component`) y export/unpack/pack de baselines locales — ya no pasa por
+  nuestro MCP Server para esta parte. El canal Pipeline (export a repo, PR, `trigger_promotion_pipeline`,
+  gate de aprobación humana antes de TEST/PROD) **no cambió**.
+- Incorporados 2 bugs reales de `dv-solution` que no conocíamos: una **race condition de
+  Windows** entre `export` y `unpack` (deben correr como comandos separados, nunca
+  encadenados — si se encadenan, `unpack` puede pisar un lock transitorio del ZIP), y que el
+  header `MSCRM.SolutionName` **falla en silencio** si está mal escrito (los componentes
+  quedan en la solución default sin ningún aviso — hay que verificar siempre consultando
+  `solutioncomponent`, nunca asumir que funcionó).
+- Sumada la **tabla de errores de validación post-import** de `dv-solution` (tabla no
+  aparece, chequeo de form falla por publicación async, rol no asignado, import job en 0%) —
+  no la teníamos documentada.
+- `dataverse-architect` (conductora) actualizada: nueva fila de canal **"SDK Python / PAC CLI
+  directo"** para la parte DEV de `solution-packager`, separada de la fila **Pipeline**
+  (intocada) para su parte de promoción.
+
+### Pendiente registrado (actualizado — antes 2026-09-10)
+
+- ~~Evaluar si conviene migrar `solution-packager` a `dv-solution`~~ — **resuelto en esta
+  versión**, como híbrido (técnicas de DEV adoptadas, gate de Pipeline preservado).
+- Sigue en pausa: evaluar `dv-metadata`/`dv-security`/`dv-overview` contra
+  `entity-builder`+`form-designer`+`view-designer`/`security-architect`/`dataverse-architect`
+  propios.
+- Sigue en pausa: profundizar el uso de `dv-query`/`dv-data`/`dv-admin` más allá del acceso
+  que ya habilita `dataverse-connect` al MCP oficial.
+- Sigue pendiente: el gap menor de `custom-api-builder` (no agrega el Custom API a ninguna
+  solución todavía).
 
 ## v1.5.1-rc1 (2026-09-10)
 
