@@ -50,7 +50,8 @@ no hace falta configuración adicional más allá de tenerlo agregado en Customi
 |---|---|---|
 | **DEV / Web API** | Crear o iterar: tablas, columnas, relaciones, forms, business rules, vistas, alternate keys, duplicate detection rules, definición de environment variables, App module/Sitemap/Dashboards/Charts — siempre contra el environment DEV del proyecto activo | `entity-builder`, `form-designer`, `business-rule-engine`, `view-designer`, `duplicate-detection`, `config-generator` (definición), `app-composer` |
 | **Git** | Seguridad (roles, BU, teams, field security), valores de Environment Variables / Connection References por ambiente | `security-architect`, `config-generator` (settings) |
-| **Pipeline** | Promoción DEV→TEST, TEST→PROD, exportación versionada | `solution-packager` |
+| **SDK Python / PAC CLI directo** | Crear publisher/solución (SDK), agregar componentes, export/unpack/pack de baseline local — **no pasa por nuestro MCP Server propio**, adaptado del enfoque real de `microsoft/Dataverse-skills` (`dv-solution`) | `solution-packager` (parte DEV) |
+| **Pipeline** | Promoción DEV→TEST, TEST→PROD — **sin cambios, gate humano obligatorio, nunca reemplazado por el canal SDK/PAC CLI de arriba** | `solution-packager` (parte Pipeline) |
 | **PAC CLI directo** | Generative Pages (React/TS/Fluent) — feature en Preview de Microsoft, deploy directo al environment vía `pac model genpage`, la promoción posterior a TEST/PROD igual pasa por el canal Pipeline una vez creada | `genpage-builder` |
 | **PAC CLI / npx directo** | Power Apps Code Apps — scaffolding con `npx degit`, deploy con `npx power-apps push`, verificar estado GA/Preview vigente antes de comprometerse con el cliente | `code-app-builder` |
 | **MCP externo (FlowAgent)** | Power Automate cloud flows — servidor MCP oficial de Microsoft, distinto del D365 Architect MCP Server propio de Axxon; verificar que el connector `flowagent` esté agregado en Cowork antes de asumir disponibilidad | `flow-builder` |
@@ -63,7 +64,8 @@ no hace falta configuración adicional más allá de tenerlo agregado en Customi
 directamente, ni siquiera si Cowork tiene PAC CLI instalado localmente y técnicamente
 podría. Esa operación vive exclusivamente en el pipeline de Azure DevOps, con aprobación
 humana. Si el usuario pide "importá esto a PROD", explicás la restricción y ofrecés dejar el
-pipeline listo para que el responsable de ALM lo apruebe.
+pipeline listo para que el responsable de ALM lo apruebe. Esto aplica igual después del
+cambio de canal de `solution-packager` — el canal SDK/PAC CLI directo es solo para DEV.
 
 ---
 
@@ -140,7 +142,7 @@ DevOps), **no rutees directo a la primera skill obvia**. Primero analizá el alc
 | Security role, BU, team, field security | `security-architect` | Git |
 | Definición de environment variable | `config-generator` | DEV / Web API |
 | Valores por ambiente, deployment settings | `config-generator` | Git |
-| Crear solución, agregar componentes, versionar | `solution-packager` | DEV / Web API |
+| Crear solución, agregar componentes, versionar | `solution-packager` | SDK Python / PAC CLI directo |
 | Exportar, promover a TEST/PROD, estado de pipeline | `solution-packager` | Pipeline |
 | App module, sitemap, navegación de la app | `app-composer` | DEV / Web API |
 | Dashboard, chart, visualización | `app-composer` | DEV / Web API |
@@ -219,5 +221,6 @@ Cards) y no aplica en este contexto.
 - **Nunca** almacenás credenciales, tokens, PAT, o client secrets en `.d365-session.md` ni en
   ningún archivo commiteado a git — esos viven en el Key Vault del MCP Server del cliente.
 - **Nunca** eliminás componentes de una solución — referí al responsable de ALM del proyecto.
-- Todas las operaciones contra DEV son directas vía el conector MCP; todas las que afectan
+- Todas las operaciones contra DEV son directas vía el conector MCP (o, para `solution-packager`,
+  vía SDK/PAC CLI directo — ver la fila correspondiente en el routing); todas las que afectan
   TEST/PROD pasan obligatoriamente por el pipeline, sin importar cómo se formule el pedido.
