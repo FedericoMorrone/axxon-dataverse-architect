@@ -6,9 +6,9 @@
   "plugins": [
     {
       "name": "axxon-dataverse-architect",
-      "description": "Skills para diseñar y construir soluciones sobre Microsoft Dataverse / Dynamics 365 CE, con modelo de ejecución por canal (DEV/Web API, Git, Pipeline) y ALM vía Azure DevOps.",
+      "description": "Skills para diseñar y construir soluciones sobre Microsoft Dataverse / Dynamics 365 CE, con modelo de ejecución por canal (DEV/Web API, SDK Python/PAC CLI, Git, Pipeline) y ALM vía Azure DevOps.",
       "source": "./plugins/axxon-dataverse-architect",
-      "version": "1.5.1-rc1",
+      "version": "1.6.0-rc1",
       "author": {
         "name": "Axxon Consulting"
       }
