@@ -1,14 +1,9 @@
 ---
 name: code-repo-manager
-description: >
-  Gestiona el código pro-code del proyecto (Plugins, Azure Functions, Logic Apps, infra
-  Bicep, pipelines) en el repo de Azure DevOps del proyecto del cliente: estructura de
-  carpetas estándar, una rama por User Story, commits, push, y Pull Request enlazado al
-  work item — nunca commitea a la rama principal ni aprueba/mergea su propio PR. Usar
-  siempre que una skill de desarrollo (`plugin-builder`, `azure-function-builder`) vaya a
-  generar código, cuando el usuario pida "creá la rama", "subí el código", "abrí el PR",
-  o "¿dónde va este código?". Lo invoca el conductor después de la Puerta 1 (plan aprobado
-  por `build-approach-advisor`).
+description: >-
+  Maneja el código pro-code en el repo ADO del proyecto: estructura, rama por User Story o
+  Task, commits, push y Pull Request enlazado; nunca aprueba ni mergea. Usar al crear rama,
+  subir código o abrir un PR.
 ---
 
 # Code Repo Manager — Axxon Dataverse Architect

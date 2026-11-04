@@ -1,13 +1,8 @@
 ---
 name: view-designer
-description: >
-  Crea y modifica Views (SavedQuery) de tablas en Dataverse / Dynamics 365 CE — vistas
-  públicas, Quick Find, Advanced Find, Associated (subgrid) y Lookup — construyendo FetchXML y
-  LayoutXML vía Web API contra DEV. Usar esta skill cuando el usuario pida crear o modificar
-  una vista o view, agregar una columna a la vista, cambiar el orden de una vista, filtrar una
-  vista, crear una vista de búsqueda rápida (Quick Find) o avanzada (Advanced Find), configurar
-  una vista asociada o subgrid, una vista de lookup, preguntar qué vistas tiene una tabla, o
-  definir la vista por defecto. Usar junto con la skill dataverse-architect.
+description: >-
+  Crea vistas de Dataverse (públicas, Quick Find, Advanced Find, Associated, Lookup):
+  columnas, filtros y orden, en DEV. Usar cuando se pida una vista, grilla o búsqueda.
 ---
 
 # View Designer — Axxon Dataverse Architect

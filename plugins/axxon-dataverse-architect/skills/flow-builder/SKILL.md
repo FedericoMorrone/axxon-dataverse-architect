@@ -1,15 +1,8 @@
 ---
 name: flow-builder
-description: >
-  Crea, edita, ejecuta, y debuggea Power Automate cloud flows vía el servidor MCP FlowAgent
-  oficial de Microsoft (no el D365 Architect MCP Server propio de Axxon — es un connector
-  MCP distinto, bundleado con la herramienta de Microsoft). Usar cuando el usuario pida un
-  flujo de Power Automate, una integración vía connector estándar (Teams, SharePoint, Excel,
-  Office 365), automatizar una notificación o proceso, revisar el historial de ejecuciones de
-  un flow, o debuggear un flow que falla. Adaptado del enfoque oficial de Microsoft (repo
-  microsoft/power-platform-skills, plugin power-automate). No usar para integraciones
-  custom vía Azure Function (eso sigue siendo diseño de `dataverse-architect`/MCP Server
-  propio) ni para páginas React (eso es `genpage-builder`).
+description: >-
+  Crea Power Automate cloud flows vía el MCP FlowAgent de Microsoft. Usar para
+  automatizaciones, notificaciones o integraciones con connectors estándar.
 ---
 
 # Flow Builder — Axxon Dataverse Architect

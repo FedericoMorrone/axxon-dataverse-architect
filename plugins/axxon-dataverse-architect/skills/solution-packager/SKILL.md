@@ -1,14 +1,9 @@
 ---
 name: solution-packager
-description: >
-  Gestiona el ciclo de vida ALM de soluciones en Dataverse / Dynamics 365 CE: crea publishers
-  y soluciones vía el SDK de Python (canal DEV), agrega componentes vía PAC CLI, versiona, y
-  promueve DEV→TEST→PROD exclusivamente vía pipeline de Azure DevOps con gates de aprobación
-  — nunca importa directo a TEST/PROD. Usar esta skill cuando el usuario pida crear una
-  solución o publisher, agregar un componente a la solución, versionar la solución, promover
-  al ambiente de TEST o PROD, listar soluciones o componentes, consultar el estado de un
-  pipeline o deploy, generar un script de pac CLI, o hable de ALM en general. Usar junto con
-  la skill dataverse-architect.
+description: >-
+  Ciclo de vida de soluciones Dataverse: publisher y solución en DEV (SDK Python / PAC CLI),
+  agregar componentes, export/unpack y promoción a TEST/PROD solo por pipeline de Azure DevOps
+  con aprobación humana.
 ---
 
 # Solution Packager — Axxon Dataverse Architect

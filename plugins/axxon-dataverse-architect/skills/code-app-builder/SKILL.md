@@ -1,17 +1,8 @@
 ---
 name: code-app-builder
-description: >
-  Crea y despliega Power Apps Code Apps — aplicaciones React + Vite + TypeScript que corren
-  dentro de Power Apps, conectadas al Power Platform vía connectors estándar (Dataverse,
-  SharePoint, Teams, Azure DevOps, OneDrive, Excel, Office 365, y más de 1500 más), con
-  autenticación Microsoft Entra. Usar cuando el usuario pida una app pro-code conectada a
-  Power Platform, necesite acceso a un connector que Dataverse solo no cubre, o mencione
-  "code app". Adaptado del enfoque oficial de Microsoft (repo microsoft/PowerAppsCodeApps y
-  microsoft/power-platform-skills). Verificar el estado GA/Preview vigente antes de
-  comprometerse con el cliente — las fuentes disponibles al momento de escribir esta skill no
-  eran consistentes entre sí. No usar para páginas dentro de una app model-driven existente
-  (eso es `genpage-builder`) ni para tablas/forms de Dataverse (eso es `entity-builder`/
-  `form-designer`).
+description: >-
+  Crea Power Apps Code Apps (React, Vite, TypeScript) conectadas a Power Platform. Usar cuando
+  se pida una app pro-code. Verificar estado GA/Preview antes de comprometerlo con el cliente.
 ---
 
 # Code App Builder — Axxon Dataverse Architect

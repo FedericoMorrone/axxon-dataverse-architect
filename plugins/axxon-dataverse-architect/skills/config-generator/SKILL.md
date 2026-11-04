@@ -1,14 +1,9 @@
 ---
 name: config-generator
-description: >
-  Genera artefactos de configuración a partir de las acciones de otras skills del Axxon
-  Dataverse Architect: Environment Variables (definición en DEV vía Web API, valores por ambiente
-  vía `pac solution create-settings` en git), documentación técnica, y el Solution Design
-  Document. Usar esta skill cuando el usuario pida generar un script de pac CLI, exportar
-  configuración, generar documentación, crear un script reproducible, documentar lo que se
-  hizo en la sesión, generar el Solution Design Document o armar el SDD, generar el JSON de la
-  solución, crear environment variables, o generar el deployment settings file. Usar junto con
-  la skill dataverse-architect.
+description: >-
+  Genera environment variables (definición en DEV, valores por ambiente con pac solution
+  create-settings), deployment settings, el Solution Design Document (SDD) y el deployment
+  checklist.
 ---
 
 # Config Generator — Axxon Dataverse Architect

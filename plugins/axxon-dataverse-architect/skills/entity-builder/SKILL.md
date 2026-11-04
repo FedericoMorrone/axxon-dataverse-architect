@@ -1,13 +1,8 @@
 ---
 name: entity-builder
-description: >
-  Crea, modifica y consulta tablas (entities), columnas (fields) y relaciones en Dataverse /
-  Dynamics 365 CE vía Web API, siempre contra el environment DEV. Usar esta skill cuando el
-  usuario pida crear o modificar una entidad, tabla, table, columna, campo, field, relación,
-  relationship, option set, o lista desplegable; cuando pregunte qué columnas tiene una tabla,
-  pida listar entidades del environment, renombrar un campo, hacer un campo obligatorio, o
-  cambiar un tipo de dato. Respeta siempre el prefijo de publisher axx_ y agrega los
-  componentes a la solución no administrada activa. Usar junto con la skill dataverse-architect.
+description: >-
+  Crea o modifica tablas, columnas, relaciones y option sets en Dataverse (DEV vía Web API).
+  Usar cuando se pida crear o cambiar una tabla, entidad, columna, campo, lookup o relación.
 ---
 
 # Entity Builder — Axxon Dataverse Architect

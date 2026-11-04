@@ -1,17 +1,10 @@
 ---
 name: dataverse-architect
-description: >
-  Coordina el diseño y construcción de soluciones sobre Microsoft Dataverse y Dynamics 365 CE
-  (entidades/tablas, columnas, formularios, business rules, vistas, seguridad, detección de
-  duplicados, environment variables, y promoción ALM vía Azure DevOps). Usar esta skill SIEMPRE
-  que el usuario mencione: crear o modificar una tabla/entity/columna en Dataverse, diseñar un
-  formulario o form de D365, escribir una business rule, crear una vista o view, configurar
-  seguridad (security role, business unit, team, field security), evitar registros duplicados
-  o crear un alternate key, generar environment variables o el deployment settings file,
-  exportar/versionar/promover una solución a TEST o PROD, o pedir el Solution Design Document.
-  Esta skill define las reglas transversales (qué canal de ejecución usar, cuándo pedir
-  confirmación, cómo se maneja la sesión) y remite a la skill específica correspondiente —
-  cargarla junto con la skill puntual, no en su reemplazo.
+description: >-
+  Skill conductora para construir sobre Dataverse / D365 CE: tablas, forms, business rules,
+  vistas, seguridad, plugins, flows, Azure Functions, soluciones y ALM. Fija canal de
+  ejecución, low-code vs pro-code y puertas de validación, y rutea a la skill puntual.
+  Cargarla junto con la skill específica.
 ---
 
 # Dataverse Architect — skill conductora

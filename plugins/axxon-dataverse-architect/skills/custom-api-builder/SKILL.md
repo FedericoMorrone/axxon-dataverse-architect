@@ -1,13 +1,8 @@
 ---
 name: custom-api-builder
-description: >
-  Define Custom APIs de Dataverse — mensajes custom expuestos vía Web API (Actions o
-  Functions), con parámetros de request/response tipados, vía MCP tools contra DEV. Usar
-  cuando el usuario pida exponer una operación custom callable desde código externo o Power
-  Automate, un endpoint tipado que no sea CRUD estándar, o mencione "Custom API",
-  "custom action", o "función custom de Dataverse". No usar para la implementación en sí
-  (casi siempre un plugin — coordiná con `plugin-builder`) ni para Business Rules (eso es
-  `business-rule-engine`).
+description: >-
+  Define el contrato de Custom APIs de Dataverse (mensaje, parámetros de entrada y salida); la
+  lógica la implementa plugin-builder. Usar para operaciones custom o endpoints tipados.
 ---
 
 # Custom API Builder — Axxon Dataverse Architect

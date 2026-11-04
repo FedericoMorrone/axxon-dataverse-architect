@@ -1,15 +1,9 @@
 ---
 name: dataverse-connect
-description: >
-  Setup único que verifica/instala PAC CLI (con confirmación previa), autentica contra el
-  environment de Dataverse, y registra el servidor MCP oficial de Microsoft Dataverse —
-  distinto del D365 Architect MCP Server propio de Axxon (ADR-002), que las otras 16 skills
-  siguen usando sin cambios. Habilita consultas/lecturas y operaciones de datos que ninguna
-  otra skill de este paquete cubre. Usar cuando el usuario pida conectar con Dataverse,
-  "dv-connect", o pregunte por lectura/analytics/bulk data sobre registros existentes.
-  Adaptado del patrón real de `dv-connect` (repo microsoft/Dataverse-skills) — NO instala el
-  plugin completo de Microsoft (evita que sus 4 skills que compiten con las nuestras
-  —`dv-metadata`, `dv-solution`, `dv-security`, `dv-overview`— entren en conflicto de routing).
+description: >-
+  Instala con confirmación y conecta el MCP oficial de Microsoft Dataverse para consultas,
+  analytics y CRUD de datos. Avisar el costo de Copilot Credits antes de usarlo con un
+  cliente.
 ---
 
 # Dataverse Connect — Axxon Dataverse Architect

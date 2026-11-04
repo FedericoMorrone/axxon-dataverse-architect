@@ -1,15 +1,8 @@
 ---
 name: duplicate-detection
-description: >
-  Configura los dos mecanismos de Dataverse / Dynamics 365 CE para evitar registros
-  duplicados: Alternate Keys (constraint duro de unicidad a nivel de índice) y Duplicate
-  Detection Rules (advertencia difusa al guardar), vía Web API contra DEV. Especialmente
-  relevante en banca/FSI para evitar clientes o solicitudes duplicadas. Usar esta skill cuando
-  el usuario pida evitar duplicados, crear una clave alternativa o alternate key, una regla de
-  detección de duplicados, no permitir clientes repetidos, validar que no exista ya un CUIT u
-  otro identificador, detectar registros duplicados, definir unicidad de un campo, un
-  constraint único, correr un job de detección de duplicados, o buscar duplicados existentes.
-  Usar junto con la skill dataverse-architect.
+description: >-
+  Configura alternate keys y reglas o jobs de detección de duplicados en Dataverse. Usar
+  cuando se pida evitar registros duplicados o definir una clave alternativa.
 ---
 
 # Duplicate Detection — Axxon Dataverse Architect

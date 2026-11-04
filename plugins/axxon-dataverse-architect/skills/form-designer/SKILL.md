@@ -1,13 +1,8 @@
 ---
 name: form-designer
-description: >
-  Diseña y modifica formularios (Main, Quick View, Quick Create, Card) de tablas en Dataverse /
-  Dynamics 365 CE, construyendo el FormXml vía Web API contra DEV. Usar esta skill cuando el
-  usuario pida crear o diseñar un formulario o form, agregar una pestaña o tab, agregar una
-  sección, agregar un campo al formulario, ocultar o mostrar un campo, mover un campo en el
-  form, configurar visibilidad, crear un quick view form o quick create form, modificar el
-  layout de un formulario, o pregunte por el formulario de una tabla específica. Usar junto
-  con la skill dataverse-architect.
+description: >-
+  Diseña formularios de Dataverse (Main, Quick Create, Quick View, Card): tabs, secciones y
+  campos, en DEV. Usar cuando se pida crear o modificar un form o su layout.
 ---
 
 # Form Designer — Axxon Dataverse Architect

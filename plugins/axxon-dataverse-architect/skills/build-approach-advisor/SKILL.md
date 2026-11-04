@@ -1,15 +1,9 @@
 ---
 name: build-approach-advisor
-description: >
-  Decide, para cada necesidad de una User Story, si conviene resolverla con low-code
-  (Business Rule, Power Automate, configuración estándar) o con desarrollo profesional
-  (Plugin de Dataverse, Custom API, Azure Function, Logic App), aplicando una matriz de
-  criterios explícita, y arma el Plan de construcción que el usuario tiene que aprobar
-  (Puerta 1) antes de que se escriba una sola línea de código o se toque un environment.
-  Usar cuando el conductor `dataverse-architect` analiza una User Story que implica lógica,
-  integración u orquestación, o cuando el usuario pregunta "¿esto va con plugin o con flow?",
-  "¿conviene una Azure Function?", "¿low-code o pro-code?", "armá el plan de construcción".
-  No construye nada — decide, justifica y pide aprobación.
+description: >-
+  Decide low-code vs pro-code (business rule, flow, plugin, Custom API, Azure Function) para
+  cada necesidad de una User Story y arma el Plan de construcción que el usuario aprueba antes
+  de construir.
 ---
 
 # Build Approach Advisor — Axxon Dataverse Architect

@@ -1,17 +1,9 @@
 ---
 name: adr-recorder
-description: >
-  Registra Architecture Decision Records (ADRs) del proyecto del cliente en la wiki de proyecto
-  de Azure DevOps, de forma estructurada: numeración correlativa, página por ADR, índice
-  actualizado, ciclo de vida (Propuesto → Aceptado → Reemplazado/Deprecado) y link del ADR a la
-  User Story que lo originó. Usar cuando el conductor `dataverse-architect` detecta una decisión
-  de arquitectura significativa durante la construcción (elegir entre Business Rule / flow /
-  plugin / Custom API, cadena Custom API → Plugin → Azure Function, integración sync vs async,
-  GAP resuelto con customización, modelo de seguridad, decisión de modelo de datos, excepción a
-  una regla de ADR-001), o cuando el usuario pide "registrá esta decisión", "armá un ADR",
-  "documentá por qué elegimos X", "aceptá / reemplazá el ADR-00N", o "mostrame los ADRs del
-  proyecto". Registra decisiones del proyecto del cliente — no los ADRs de producto de los repos
-  axxon-* (esos viven en `docs/` de cada repo).
+description: >-
+  Registra ADRs (decisiones de arquitectura) del proyecto en la wiki de proyecto de Azure
+  DevOps: numeración, índice, estados y link a la User Story. Usar al decidir entre
+  alternativas o cuando se pida un ADR.
 ---
 
 # ADR Recorder — Axxon Dataverse Architect

@@ -1,16 +1,9 @@
 ---
 name: plugin-builder
-description: >
-  Diseña y desarrolla Plugins de Dataverse (C#/.NET Framework) de punta a punta — proyecto
-  con `pac plugin init`, código, tests unitarios, build del plug-in package (NuGet),
-  registration manifest de steps, PR en el repo ADO del proyecto, y registro/actualización en
-  DEV después del PR — para lógica server-side contra mensajes (Create, Update, Delete,
-  Associate, mensajes custom), sync o async, en Pre-validation/Pre-operation/Post-operation.
-  Usar cuando `build-approach-advisor` decidió pro-code con Plugin (transaccionalidad,
-  validación compleja, performance crítica), o el usuario mencione "plugin", "step de
-  plugin", "pre-operation"/"post-operation". No usar para el contrato de un Custom API (eso
-  es `custom-api-builder`, aunque casi siempre se implementa acá) ni para Business Rules
-  simples (`business-rule-engine`).
+description: >-
+  Desarrolla Plugins de Dataverse (C#, net462) de punta a punta: código, tests, plug-in
+  package, manifest de steps, PR en el repo ADO y registro en DEV. Usar para lógica
+  server-side transaccional, pre/post-operation o steps.
 ---
 
 # Plugin Builder — Axxon Dataverse Architect

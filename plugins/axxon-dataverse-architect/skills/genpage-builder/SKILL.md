@@ -1,16 +1,8 @@
 ---
 name: genpage-builder
-description: >
-  Crea, actualiza, y despliega Generative Pages (genux) — páginas React 17 + TypeScript +
-  Fluent UI V9 embebidas nativamente (sin iframe) dentro de una app model-driven de Dynamics
-  365 / Power Platform, vía PAC CLI. Usar cuando el usuario pida una página custom dentro de
-  la app model-driven, un dashboard/grid con código a medida, una página con lógica que
-  Business Rules/Views no puedan cubrir, o mencione "generative page", "genpage", o "genux".
-  Adaptado del enfoque oficial de Microsoft (repo microsoft/power-platform-skills, plugin
-  model-apps). **Feature en Preview de Microsoft** — confirmar con el cliente antes de
-  usarla en un engagement real, no asumir que es GA. No usar para tablas/forms/vistas
-  estándar (eso es `entity-builder`/`form-designer`/`view-designer`) ni para el módulo de App
-  y su Sitemap (eso es `app-composer`).
+description: >-
+  Crea Generative Pages (React, TypeScript, Fluent; Preview de Microsoft) con pac model
+  genpage. Usar cuando se pida una página custom con código dentro de una app model-driven.
 ---
 
 # Generative Page Builder — Axxon Dataverse Architect

@@ -1,13 +1,9 @@
 ---
 name: business-rule-engine
-description: >
-  Crea y documenta Business Rules en Dataverse / Dynamics 365 CE vía Web API contra DEV,
-  evaluando cuándo conviene Business Rule vs Power Fx vs JavaScript Web Resource. Usar esta
-  skill cuando el usuario pida crear una regla de negocio o business rule, describa lógica del
-  tipo "si el campo X entonces el campo Y", pida ocultar un campo cuando pase algo, hacer un
-  campo obligatorio condicionalmente, validar que un monto sea mayor a un valor, bloquear un
-  campo según el estado, mostrar un mensaje de error, o describa cualquier lógica condicional
-  de formulario. Usar junto con la skill dataverse-architect.
+description: >-
+  Crea Business Rules de Dataverse en DEV: validaciones, campos requeridos, visibles o
+  bloqueados y valores por defecto condicionales. Usar para lógica de UI o validación simple
+  sin código.
 ---
 
 # Business Rule Engine — Axxon Dataverse Architect

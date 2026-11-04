@@ -1,14 +1,9 @@
 ---
 name: security-architect
-description: >
-  Diseña el modelo de seguridad en Dataverse / Dynamics 365 CE — Security Roles, Business
-  Units, Teams, Column/Field Security, Hierarchy Security — generando XML de solución y
-  commiteando a git en vez de ejecutar en vivo, porque la seguridad es sensible y se beneficia
-  del PR review. Usar esta skill cuando el usuario pida crear un rol de seguridad o security
-  role, configurar permisos, asignar permisos sobre una entidad, crear una business unit o
-  team, configurar field level security o column security, diseñar el modelo de seguridad,
-  preguntar quién puede ver qué, configurar sharing, hierarchy security, armar la matriz de
-  seguridad, o preguntar qué permisos tiene un rol. Usar junto con la skill dataverse-architect.
+description: >-
+  Diseña la seguridad de Dataverse (security roles, business units, teams, column security)
+  versionada en Git como XML de solución, con PR. Usar para roles, permisos, BU, equipos o
+  seguridad de campos.
 ---
 
 # Security Architect — Axxon Dataverse Architect

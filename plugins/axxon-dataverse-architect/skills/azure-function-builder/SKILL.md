@@ -1,15 +1,9 @@
 ---
 name: azure-function-builder
-description: >
-  Crea y despliega Azure Functions como parte de la capa de integración de una solución
-  Dataverse — webhooks, middleware, procesamiento async pesado llamado desde plugins o Power
-  Automate — contra la suscripción de Azure definida en `.d365-project.md`. Usar cuando el
-  usuario pida una integración con un sistema externo que necesite código custom en Azure, un
-  endpoint HTTP que reciba llamadas de Dataverse, un job programado, o mencione "Azure
-  Function", "webhook", "middleware de integración". El deploy a producción pasa por el mismo
-  gate de aprobación humana que `solution-packager` — nunca directo. No usar para lógica
-  dentro de Dataverse (eso es `plugin-builder`) ni para flows de Power Automate (eso es
-  `flow-builder`).
+description: >-
+  Desarrolla Azure Functions de integración (webhooks, middleware, jobs) con tests, Bicep y
+  pipeline en el repo ADO del proyecto. Deploy a DEV directo; a PROD solo por pipeline con
+  aprobación.
 ---
 
 # Azure Function Builder — Axxon Dataverse Architect

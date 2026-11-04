@@ -1,5 +1,15 @@
 # Changelog — Axxon Dataverse Architect
 
+## v1.8.2-rc1 (2026-11-04)
+
+- **Descripciones de skills acortadas (hallazgo H-02):** Claude Code carga en cada turno un
+  listado de skills con presupuesto de caracteres (~1% del contexto) y, si se excede,
+  descarta las descripciones de las skills menos usadas — verificado en la documentación
+  oficial y en una sesión real, donde las skills de este paquete aparecían sin descripción
+  (afecta la activación automática). Se reescribieron a < 300 caracteres, caso de uso
+  principal primero, en bloque YAML `>-`. Total de las 35 skills axxon: 26.540 → ~6.400
+  caracteres.
+
 ## v1.8.1-rc1 (2026-11-04)
 
 Integración con el flujo entre roles (contrato ADO — `axxon-dataverse-agent/docs/ado-contract.md`).

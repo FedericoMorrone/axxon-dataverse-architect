@@ -1,13 +1,8 @@
 ---
 name: app-composer
-description: >
-  Configura el módulo de App (App Module), su Sitemap (navegación: Area > Group > SubArea), y
-  Dashboards/Charts en Dataverse / Dynamics 365 CE vía Web API contra DEV. Usar cuando el
-  usuario pida crear o modificar una app model-driven, agregar una tabla/página al sitemap,
-  reorganizar la navegación de la app, crear un dashboard o un chart, o preguntar qué apps
-  existen en el environment. No usar para el contenido de tablas/forms/vistas individuales
-  (eso ya lo cubren `entity-builder`/`form-designer`/`view-designer`) ni para páginas custom
-  con código (eso es `genpage-builder`). Usar junto con la skill dataverse-architect.
+description: >-
+  Arma la app model-driven en DEV: app module, sitemap y navegación, dashboards y charts. Usar
+  cuando se pida la app, el menú, un dashboard o un gráfico.
 ---
 
 # App Composer — Axxon Dataverse Architect

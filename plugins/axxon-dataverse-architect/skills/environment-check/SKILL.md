@@ -1,16 +1,8 @@
 ---
 name: environment-check
-description: >
-  Verifica que las herramientas de línea de comandos que necesitan `genpage-builder`,
-  `code-app-builder`, `azure-function-builder`, `plugin-builder` y `code-repo-manager`
-  (Node.js, PAC CLI, Azure Functions Core Tools, Azure CLI, .NET SDK, Git) estén instaladas
-  y con la versión mínima requerida, antes de que cualquiera de esas skills intente usarlas
-  — reporta un consolidado y nunca instala nada sin confirmación explícita. Usar como paso
-  previo obligatorio de esas skills, o cuando el
-  usuario pregunte directamente "¿tengo todo instalado para X?". Adaptado del patrón de
-  orchestration.md (repo de skills de Antigravity) — deliberadamente NO se adoptó el
-  mecanismo de autenticación de esas skills (az CLI + Device Code), que quedó superado por
-  el servidor MCP oficial (ver ADR-001 de axxon-ado-connector).
+description: >-
+  Verifica herramientas locales (Node.js, PAC CLI, .NET SDK, Git, Azure CLI, Functions Core
+  Tools) antes de las skills de construcción. Solo reporta, nunca instala.
 ---
 
 # Environment Check — Axxon Dataverse Architect
