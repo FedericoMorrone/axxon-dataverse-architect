@@ -21,10 +21,18 @@ endpoint HTTP que otro sistema necesita llamar.
 
 ---
 
+## Antes de arrancar (0) — Puerta 1 y rama
+
+- Tiene que existir un **Plan de construcción aprobado** por el usuario
+  (`build-approach-advisor`) que incluya esta Function. Sin eso, no se crea ningún archivo.
+- La rama `feature/US-{id}-...` la crea `code-repo-manager`. El código va en
+  `/src/functions/{nombre}`, los tests en `/src/functions/tests/{nombre}.Tests`, la infra en
+  `/infra` y el pipeline en `/pipelines` (estructura estándar de `code-repo-manager`).
+
 ## Antes de arrancar (1) — verificar el entorno
 
-Corré `environment-check` primero (Azure Functions Core Tools, Azure CLI) — no arranques
-`func init` con una herramienta faltante.
+Corré `environment-check` primero (Azure Functions Core Tools, Azure CLI, .NET SDK) — no
+arranques `func init` con una herramienta faltante.
 
 ## Antes de arrancar (2) — leer `.d365-project.md`
 
@@ -47,11 +55,20 @@ vacía o no existe el archivo, es el mismo gate bloqueante que ya rige para el r
    otra cosa.
 2. **Desarrollo local**: `func init` (Azure Functions Core Tools) para el scaffolding, `func
    new` para agregar un trigger, `func start` para correr y probar localmente antes de tocar
-   Azure.
-3. **Deploy a DEV**: `func azure functionapp publish {nombre-app}` — esto sí podés correrlo
-   vos directo contra el environment DEV/Test de desarrollo, sin gate adicional (mismo
-   criterio que el canal DEV del resto del paquete).
-4. **Deploy a PROD**: **nunca** `func azure functionapp publish` apuntando a producción
+   Azure. `local.settings.json` **nunca** se commitea con valores reales (`.gitignore`).
+3. **Tests**: proyecto xUnit en `/src/functions/tests`, con la lógica separada del trigger
+   (el trigger solo adapta la entrada/salida). Mínimo un test por criterio de aceptación que
+   la Function implementa, más el caso de error del sistema externo. `dotnet test` en verde
+   antes de la Puerta 2.
+4. **Infra y pipeline**: Bicep en `/infra` (ver abajo) y YAML en `/pipelines` (build + deploy
+   a DEV; el stage de PROD con environment de Azure DevOps con aprobación manual).
+5. **Puerta 2 y PR**: `code-repo-manager` muestra el resumen (archivos, build, tests) y pide
+   OK antes del push; luego abre el PR enlazado a la User Story. **Puerta 3:** revisión
+   humana del PR.
+6. **Deploy a DEV** — con confirmación explícita, idealmente después del PR aprobado:
+   `func azure functionapp publish {nombre-app}` — esto sí podés correrlo vos directo contra
+   el environment DEV de desarrollo (mismo criterio que el canal DEV del resto del paquete).
+7. **Deploy a PROD**: **nunca** `func azure functionapp publish` apuntando a producción
    directo. Sigue el mismo canal Pipeline con gate de aprobación humana que
    `solution-packager` — un pipeline de Azure DevOps con el task `AzureFunctionApp`, revisado
    y aprobado antes de ejecutar.
@@ -65,6 +82,7 @@ alguien recuerde los parámetros exactos que usó una vez.
 
 ## Restricciones
 
+- Nunca escribas código sin la Puerta 1 aprobada, ni pushees sin la Puerta 2.
 - Nunca deploy a producción sin pasar por el canal Pipeline con gate humano — sin excepción,
   mismo criterio que `solution-packager`.
 - Nunca asumas la suscripción/resource group — siempre `.d365-project.md` primero.

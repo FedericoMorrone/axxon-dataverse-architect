@@ -22,7 +22,8 @@ técnicas vos mismo — cada skill específica (`entity-builder`, `form-designer
 `business-rule-engine`, `view-designer`, `duplicate-detection`, `security-architect`,
 `config-generator`, `solution-packager`, `app-composer`, `genpage-builder`, `flow-builder`,
 `code-app-builder`, `plugin-builder`, `custom-api-builder`, `azure-function-builder`,
-`environment-check`, `dataverse-connect`, `adr-recorder`) tiene sus propios MCP tools y reglas. Esta skill fija lo que es común a
+`environment-check`, `dataverse-connect`, `adr-recorder`, `build-approach-advisor`,
+`code-repo-manager`) tiene sus propios MCP tools y reglas. Esta skill fija lo que es común a
 todas.
 
 ---
@@ -57,7 +58,7 @@ no hace falta configuración adicional más allá de tenerlo agregado en Customi
 | **PAC CLI directo** | Generative Pages (React/TS/Fluent) — feature en Preview de Microsoft, deploy directo al environment vía `pac model genpage`, la promoción posterior a TEST/PROD igual pasa por el canal Pipeline una vez creada | `genpage-builder` |
 | **PAC CLI / npx directo** | Power Apps Code Apps — scaffolding con `npx degit`, deploy con `npx power-apps push`, verificar estado GA/Preview vigente antes de comprometerse con el cliente | `code-app-builder` |
 | **MCP externo (FlowAgent)** | Power Automate cloud flows — servidor MCP oficial de Microsoft, distinto del D365 Architect MCP Server propio de Axxon; verificar que el connector `flowagent` esté agregado en Cowork antes de asumir disponibilidad | `flow-builder` |
-| **Git (código compilado)** | Plugins C#/.NET — código fuente versionado, PR review antes de registrar, nunca directo contra DEV | `plugin-builder` |
+| **Git (código compilado)** | Plugins C#/.NET y código de Azure Functions — en el repo ADO del proyecto, rama por User Story, PR review antes de registrar/desplegar, nunca directo contra DEV | `plugin-builder`, `azure-function-builder`, vía `code-repo-manager` |
 | **DEV / Web API** *(agregado a la fila de arriba)* | Definición del contrato de un Custom API (metadata, no la implementación) | `custom-api-builder` |
 | **Azure CLI / Functions Core Tools** | Build y deploy de Azure Functions — DEV directo permitido, PROD **siempre** vía Pipeline con gate humano (mismo criterio que `solution-packager`), contra la suscripción de `.d365-project.md` | `azure-function-builder` |
 | **MCP oficial de Microsoft Dataverse** | Consultas/analytics y CRUD sobre datos existentes — habilitado por `dataverse-connect`, distinto del D365 Architect MCP Server propio; instalar solo con confirmación, avisar el costo de Copilot Credits antes de usarlo con un cliente real | `dataverse-connect` |
@@ -122,11 +123,13 @@ DevOps), **no rutees directo a la primera skill obvia**. Primero analizá el alc
      → **no metas esa llamada HTTP dentro del plugin sync** (ver restricción explícita en
      `plugin-builder`) — necesitás `azure-function-builder` para la pieza de integración, y el
      plugin la llama de forma async.
-3. **Mostrale el plan completo al usuario antes de ejecutar el primer paso** — cuántas skills
-   están involucradas, en qué orden, y por qué (ej. "esto necesita Custom API + Plugin +
-   Azure Function, porque la validación de crédito tiene que consultar un sistema externo").
-   Nunca arranques a construir la primera pieza sin haber mostrado el alcance completo primero
-   — el usuario tiene que poder frenarte si el alcance que inferiste está mal.
+3. **Decidí low-code vs. pro-code con `build-approach-advisor`** y mostrale al usuario el
+   **Plan de construcción** completo (Puerta 1) antes de ejecutar el primer paso — cuántas
+   piezas, con qué enfoque, en qué orden, y el criterio que justifica cada pieza pro-code (ej.
+   "Custom API + Plugin + Azure Function, porque la validación de crédito tiene que consultar
+   un sistema externo sin connector"). Nunca arranques a construir la primera pieza sin el
+   plan aprobado explícitamente — el usuario tiene que poder frenarte si el alcance o el
+   enfoque que inferiste está mal.
 4. Si después de leer la Historia completa **no está claro** si hace falta esta cadena (ej. no
    queda claro si la integración es sync u async, o si el sistema externo ya tiene un
    connector estándar que resolvería esto con `flow-builder` en vez de código custom),
@@ -160,6 +163,8 @@ DevOps), **no rutees directo a la primera skill obvia**. Primero analizá el alc
 | Azure Function, webhook, middleware, integración externa custom | `azure-function-builder` | Azure CLI / Functions Core Tools |
 | Consultar/leer datos existentes, analytics, bulk CRUD, "conectate a Dataverse" | `dataverse-connect` | MCP oficial de Microsoft |
 | ADR, "registrá esta decisión", "por qué elegimos X", aceptar/reemplazar un ADR | `adr-recorder` | ADO Wiki (MCP oficial de Azure DevOps) |
+| "¿plugin o flow?", "¿low-code o pro-code?", plan de construcción de una User Story | `build-approach-advisor` | — (decide, no construye) |
+| Rama, commit, push, PR del código pro-code, "¿dónde va este código?" | `code-repo-manager` | Git (repo ADO del proyecto) |
 
 Si el pedido mezcla varias operaciones ("creá la tabla, el form, y bloqueá el campo monto si
 el estado es Aprobada"), descomponelo y secuencialo en orden de dependencia — tabla → columnas
@@ -196,6 +201,24 @@ reglas completas están en `adr-recorder`. Antes de proponer una decisión nueva
 
 ---
 
+## Desarrollo profesional (pro-code) — las tres puertas
+
+Toda pieza pro-code (Plugin, Custom API con implementación, Azure Function) pasa por tres
+validaciones humanas, sin excepción y aunque el usuario tenga apuro:
+
+| Puerta | Cuándo | Quién valida | Qué se muestra |
+|---|---|---|---|
+| **1 — Plan** | Antes de crear la rama o escribir una línea | El usuario, en el chat | Plan de construcción de `build-approach-advisor`: piezas, enfoque, criterio, repo/rama, destino |
+| **2 — Resultado** | Antes de `git push` y de registrar/desplegar algo en DEV | El usuario, en el chat | Archivos, build y tests (verde/rojo), registration manifest, qué se va a desplegar |
+| **3 — PR** | Antes de mergear | Una persona del equipo, en Azure DevOps | El PR enlazado a la User Story — el agente nunca aprueba ni mergea |
+
+Orden de ruteo después de la Puerta 1: `code-repo-manager` (rama) → `custom-api-builder`
+(contrato, si aplica) → `plugin-builder` / `azure-function-builder` → piezas low-code →
+`code-repo-manager` (Puerta 2, push, PR). TEST/PROD siguen exclusivamente por pipeline con
+gate (ADR-001, sin cambios).
+
+---
+
 ## Patrón de confirmación (complementa, no reemplaza, el modelo de permisos de Cowork)
 
 Mostrás resumen y esperás confirmación explícita antes de:
@@ -208,6 +231,8 @@ Mostrás resumen y esperás confirmación explícita antes de:
 - Abrir un Pull Request
 - Disparar un pipeline de promoción a TEST
 - Publicar un ADR en la wiki del proyecto, o cambiar su estado
+- Empezar a construir pro-code (Puerta 1), pushear código o registrar/desplegar en DEV
+  (Puerta 2)
 - Cualquier acción que involucre TEST o PROD
 
 ```

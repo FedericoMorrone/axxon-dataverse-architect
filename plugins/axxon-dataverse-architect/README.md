@@ -25,6 +25,7 @@ Skills de **Claude Cowork** especializadas en la construcción de soluciones sob
 | `ADR-002-topology.md` | — (referencia) | Decisión arquitectónica: topología del MCP Server (por cliente) y de Azure DevOps | — |
 | `ADR-003-cowork-platform.md` | — (referencia) | Decisión arquitectónica: pivot Copilot Studio → Claude Cowork | — |
 | `ADR-005-adr-registry-project-wiki.md` | — (referencia) | Decisión arquitectónica: registro de ADRs del proyecto en la wiki de proyecto de ADO | — |
+| `ADR-006-pro-code-development.md` | — (referencia) | Decisión arquitectónica: low-code vs. pro-code, tres puertas de validación, repo de código del proyecto | — |
 | `07-mcp-server.md`            | — (referencia, no es skill)   | Azure Function: cliente Web API (DEV) + cliente Azure DevOps (Repos+Pipelines) | — |
 | `dataverse-architect/SKILL.md`     | dataverse-architect          | Skill conductora: routing por canal, contexto de proyecto, reglas transversales | — |
 | `entity-builder/SKILL.md`     | entity-builder         | Tablas, columnas, relaciones, option sets                       | DEV / Web API |
@@ -39,7 +40,9 @@ Skills de **Claude Cowork** especializadas en la construcción de soluciones sob
 | `genpage-builder/SKILL.md`    | genpage-builder         | Generative Pages (React 17 + TS + Fluent, **Preview** de Microsoft) | PAC CLI directo |
 | `flow-builder/SKILL.md`       | flow-builder            | Power Automate cloud flows — vía FlowAgent MCP (servidor de Microsoft, no el propio) | MCP externo |
 | `code-app-builder/SKILL.md`   | code-app-builder        | Power Apps Code Apps (React + Vite + TS, 1500+ connectors) — **verificar GA/Preview vigente** | PAC CLI / npx directo |
-| `plugin-builder/SKILL.md`     | plugin-builder          | Plugins C#/.NET — steps, mensajes, sync/async, filtering attributes, images | Git |
+| `build-approach-advisor/SKILL.md` | build-approach-advisor | Decide low-code vs. pro-code por necesidad y arma el Plan de construcción (Puerta 1) | — (decide, no construye) |
+| `code-repo-manager/SKILL.md` | code-repo-manager | Repo ADO del proyecto: estructura, rama por User Story, Puerta 2, PR enlazado — nunca mergea | Git |
+| `plugin-builder/SKILL.md`     | plugin-builder          | Plugins C#/.NET de punta a punta — proyecto, código, tests, plug-in package, registration manifest, registro en DEV post-PR | Git |
 | `custom-api-builder/SKILL.md` | custom-api-builder      | Custom APIs (contrato: Action/Function, parámetros) — implementación va en `plugin-builder` | DEV / Web API |
 | `azure-function-builder/SKILL.md` | azure-function-builder | Azure Functions — integración externa, deploy DEV directo, PROD vía Pipeline con gate | Azure CLI / Functions Core Tools |
 | `environment-check/SKILL.md` | environment-check | Verifica Node.js/PAC CLI/Azure CLI/Functions Core Tools antes de las 3 skills de arriba — nunca instala, solo reporta | — (gate previo, no ejecuta nada) |

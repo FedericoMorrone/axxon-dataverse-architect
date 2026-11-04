@@ -1,5 +1,41 @@
 # Changelog — Axxon Dataverse Architect
 
+## v1.8.0-rc1 (2026-11-04)
+
+Desarrollo profesional (pro-code) de punta a punta, con tres puertas de validación humana
+(ver ADR-006).
+
+### Agregado
+- **`build-approach-advisor`**: matriz low-code vs. pro-code por necesidad de la User Story
+  (low-code primero), y Plan de construcción que el usuario aprueba antes de escribir código
+  (Puerta 1). Ofrece registrar la decisión como ADR.
+- **`code-repo-manager`**: un repo ADO por proyecto con estructura estándar (`/solution`,
+  `/src/plugins`, `/src/functions`, `/src/logicapps`, `/infra`, `/pipelines`, `/docs`), rama
+  por User Story, Puerta 2 antes del push, PR enlazado al work item (`repo_pull_request_write`
+  con `workItems` como string separado por espacios — verificado contra
+  `microsoft/azure-devops-mcp`). Nunca aprueba ni mergea.
+
+### Cambiado
+- **`plugin-builder`**: de "diseña y documenta" a desarrollo completo — `pac plugin init
+  --skip-signing`, plug-in package (dependent assemblies, `net462`), lógica separada para
+  testear, tests xUnit, `dotnet build`/`test`, registration manifest en `/docs`, primer
+  registro guiado con Plugin Registration Tool y actualizaciones en DEV con `pac plugin push`
+  (verificado en Microsoft Learn: `push` requiere el ID de algo ya registrado). Fix al patrón
+  de código: `InvalidPluginExecutionException` se relanza sin re-envolver.
+- **`azure-function-builder`**: Puertas 1/2, tests, Bicep y YAML en el repo del proyecto.
+- **`environment-check`**: verifica también .NET SDK y Git, y PAC CLI para `plugin-builder`.
+- **`dataverse-architect`**: el análisis de alcance usa `build-approach-advisor`; sección
+  "Desarrollo profesional — las tres puertas"; filas de routing nuevas; canal Git (código
+  compilado) cubre Plugins y Functions vía `code-repo-manager`.
+
+### Decidido
+- No se adopta FakeXrmEasy v2+ por default (licencia RPL-1.5 / comercial paga para uso de
+  consultoría).
+- `logic-app-builder` queda para v1.9.
+
+### Docs
+- `docs/ADR-006-pro-code-development.md`.
+
 ## v1.7.0-rc1 (2026-11-04)
 
 Registro estructurado de decisiones de arquitectura del proyecto del cliente (ver ADR-005).

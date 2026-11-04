@@ -2,10 +2,11 @@
 name: environment-check
 description: >
   Verifica que las herramientas de línea de comandos que necesitan `genpage-builder`,
-  `code-app-builder`, y `azure-function-builder` (Node.js, PAC CLI, Azure Functions Core
-  Tools, Azure CLI) estén instaladas y con la versión mínima requerida, antes de que
-  cualquiera de esas 3 skills intente usarlas — reporta un consolidado y nunca instala nada
-  sin confirmación explícita. Usar como paso previo obligatorio de esas 3 skills, o cuando el
+  `code-app-builder`, `azure-function-builder`, `plugin-builder` y `code-repo-manager`
+  (Node.js, PAC CLI, Azure Functions Core Tools, Azure CLI, .NET SDK, Git) estén instaladas
+  y con la versión mínima requerida, antes de que cualquiera de esas skills intente usarlas
+  — reporta un consolidado y nunca instala nada sin confirmación explícita. Usar como paso
+  previo obligatorio de esas skills, o cuando el
   usuario pregunte directamente "¿tengo todo instalado para X?". Adaptado del patrón de
   orchestration.md (repo de skills de Antigravity) — deliberadamente NO se adoptó el
   mecanismo de autenticación de esas skills (az CLI + Device Code), que quedó superado por
@@ -40,10 +41,14 @@ manejan (recarga de PATH, rutas de fallback hardcodeadas, troubleshooting de TF4
 | PAC CLI | `pac --version` | `genpage-builder`, `code-app-builder` | ≥2.7.0 (`genpage-builder` específicamente) |
 | Azure Functions Core Tools | `func --version` | `azure-function-builder` | Cualquiera reciente |
 | Azure CLI | `az --version` | `azure-function-builder`, opcionalmente `genpage-builder` (solo si crea entidades nuevas) | Cualquiera reciente |
+| PAC CLI | `pac --version` | `plugin-builder` (`pac plugin init` / `pac plugin push`) | Una que incluya `pac plugin` (la guía de Microsoft pide ≥1.17 para plug-in packages) |
+| .NET SDK | `dotnet --version` | `plugin-builder`, `azure-function-builder` (build y tests) | El que soporte el target del proyecto (plugins: .NET Framework `net462` vía SDK-style; Functions: la versión de .NET del proyecto) |
+| Git | `git --version` | `code-repo-manager` | Cualquiera reciente, con credenciales configuradas para el ADO del proyecto (no se verifican ni se piden: si un `git fetch` falla por auth, se reporta) |
 
 ## Flujo
 
-1. Correr los 4 comandos de verificación de arriba.
+1. Correr los comandos de verificación de las herramientas que necesita la skill que se va a
+   usar (no todas siempre).
 2. Armar un reporte consolidado (tabla: herramienta, instalada sí/no, versión encontrada,
    cumple el mínimo sí/no).
 3. Mostrárselo al usuario **antes** de invocar `genpage-builder`/`code-app-builder`/
@@ -52,7 +57,7 @@ manejan (recarga de PATH, rutas de fallback hardcodeadas, troubleshooting de TF4
    usuario qué falta y esperar confirmación explícita de que quiere proceder con la
    instalación (y aun con confirmación, la instalación en sí la hace el usuario en su
    Terminal, no vos por él — ver Restricciones).
-5. Solo con las 4 herramientas relevantes a la skill que se va a usar confirmadas, proceder.
+5. Solo con las herramientas relevantes a la skill que se va a usar confirmadas, proceder.
 
 ## Ejemplo de reporte consolidado
 
@@ -76,9 +81,10 @@ seguir: `pac install latest` (o el comando que corresponda a tu instalación).
 - Nunca usar rutas hardcodeadas de instalación (ej. `C:\Program Files\...\az.cmd`) como
   fallback — si el comando no se encuentra en PATH, reportalo así, no adivines dónde puede
   estar instalado en la máquina de un usuario que no conocés.
-- Nunca asumir el sistema operativo del usuario — los 4 comandos de verificación son
-  multiplataforma (Node.js, PAC CLI, Functions Core Tools, y Azure CLI corren igual en
-  Windows/Mac/Linux), no hace falta lógica específica por SO para esto.
+- Nunca asumir el sistema operativo del usuario — los comandos de verificación son
+  multiplataforma, no hace falta lógica específica por SO para esto. (Ojo: compilar plugins
+  `net462` fuera de Windows requiere los reference assemblies de .NET Framework — si el
+  build falla por eso, reportalo, no lo "arregles" cambiando el target.)
 - No reemplaza el gate de `.d365-project.md` (`axxon-orchestrator`) — son gates distintos:
   este verifica herramientas instaladas, aquel verifica datos del proyecto confirmados.
   Ambos pueden aplicar a la misma skill.
