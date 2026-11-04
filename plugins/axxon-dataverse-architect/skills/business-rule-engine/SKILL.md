@@ -273,8 +273,9 @@ Las reglas se crean en estado **Draft** (`statecode: 0`). Para activarlas:
 Antes de llamar `add_to_solution`, confirmá cuál es la solución correcta — nunca asumas el
 nombre de un ejemplo de esta documentación ni tomes la primera que aparezca:
 
-1. Buscá el campo `Solución` en `.d365-session.md` (el conductor `dataverse-architect` lo
-   mantiene) — si está seteado, usalo directo, no vuelvas a preguntar.
+1. Buscá la solución en `## Solución Dataverse` de `.d365-project.md` (el contexto del
+   proyecto que lee el conductor `dataverse-architect`) — si está seteada, usala directo, no
+   vuelvas a preguntar.
 2. Si el archivo no existe, el campo está vacío, o hay motivo para pensar que puede haber más
    de una solución candidata en este environment, llamá `list_solutions` (de
    `solution-packager`) y preguntale al usuario explícitamente cuál corresponde — nunca

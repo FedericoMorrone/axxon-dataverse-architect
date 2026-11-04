@@ -1,5 +1,30 @@
 # Changelog — Axxon Dataverse Architect
 
+## v1.9.0-rc1 (2026-11-04)
+
+Fixes de prioridad 2 del documento de hallazgos.
+
+- **Contexto unificado (H-01, H-04):** el conductor y las skills (`entity-builder`,
+  `form-designer`, `view-designer`, `business-rule-engine`, `solution-packager`,
+  `config-generator`, `security-architect`, `adr-recorder`) leen `.d365-project.md` y loguean
+  en `.d365-fases/fase-2-implement.md` — mismo esquema que el supraagente. El caché de GUIDs
+  de privilegios pasa a `## Caché técnico` del log de fase. Si existe un `.d365-session.md`
+  viejo, el conductor ofrece migrarlo (lo deja como `.bak`, no lo borra).
+- **Modo solo DEV (H-01):** TEST/PROD `N/A` válido; la promoción a un ambiente `N/A` queda
+  bloqueada en el conductor y en `solution-packager`.
+- **Confirmar que es DEV (H-06):** el MCP no expone `WhoAmI` ni el tipo de environment. Regla
+  nueva en el conductor: URL igual a la DEV de `.d365-project.md`; si hay PAC CLI, `pac env
+  who` + `pac admin list --environment {URL}` (columna Type — si es Production, se para; puede
+  requerir permisos de admin); y confirmación explícita del usuario.
+- **PAC CLI (H-13):** el mínimo "≥2.7.0" era incorrecto — la numeración es 1.x y Microsoft
+  pide la **última** versión para Generative Pages (≥1.17 para plug-in packages). La versión
+  se ve con `pac` sin argumentos (`pac --version` no está documentado); `pac org` → `pac env`
+  desde la 1.32. Corregido en `environment-check`, `genpage-builder`, `dataverse-connect` y
+  `solution-packager`. Verificado contra Microsoft Learn.
+- **Host verificado (H-12):** `environment-check` informa siempre `Host verificado: {SO} —
+  {hostname}` y advierte cuando no es la máquina del usuario (sesión en la nube, contenedor,
+  SO distinto), pidiendo que el usuario corra los comandos si corresponde.
+
 ## v1.8.2-rc1 (2026-11-04)
 
 - **Descripciones de skills acortadas (hallazgo H-02):** Claude Code carga en cada turno un

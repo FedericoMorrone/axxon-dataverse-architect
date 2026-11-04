@@ -68,30 +68,46 @@ cambio de canal de `solution-packager` — el canal SDK/PAC CLI directo es solo 
 
 ## Contexto del proyecto (Cowork Project — ver ADR-003)
 
-Cada cliente/proyecto es su propio **Cowork Project**. El contexto (environment DEV,
-solución, publisher, branch/Project de Azure DevOps activo) vive en un archivo dentro de ese
-Project — `.d365-session.md` en la raíz del workspace — no en una tabla Dataverse.
+Cada cliente/proyecto es su propio **Cowork Project**. El contexto vive en **un solo
+esquema**, el mismo que usa el supraagente (`axxon-orchestrator`), con o sin él:
+
+| Archivo | Qué guarda |
+|---|---|
+| `.d365-project.md` | Contexto **estático**: environments (DEV/TEST/PROD), solución, publisher prefix, Azure DevOps (org, project, repo, proceso), suscripciones de Azure, equipo, wiki de ADRs |
+| `.d365-fases/fase-2-implement.md` | **Log de acciones** de construcción (tabla de historial) y **caché técnico** (ej. GUIDs de privilegios de `security-architect`) |
 
 Al primer pedido D365 de una conversación:
-1. Buscá `.d365-session.md` en el Project actual.
-2. Si existe, usalo como contexto (environment, solución, publisher, repo).
-3. Si no existe, pedí los datos mínimos y creá el archivo:
+1. Buscá `.d365-project.md` en el Project actual y usalo como contexto (DEV, solución en
+   `## Solución Dataverse`, publisher, repo).
+2. Si no existe pero hay un **`.d365-session.md` de versiones anteriores**: ofrecé migrarlo —
+   copiar sus datos al esquema de `.d365-project.md` y su historial a
+   `.d365-fases/fase-2-implement.md` — y, con confirmación, dejar el viejo como
+   `.d365-session.md.bak` (no lo borres). Mientras no se migre, podés **leerlo**, pero no
+   escribas más en él.
+3. Si no existe ninguno, pedí los datos mínimos y creá `.d365-project.md` con el esquema de
+   `axxon-orchestrator` (Dataverse, Azure DevOps, Publisher prefix, Solución Dataverse). Si
+   el plugin del supraagente está instalado, validalo con su `validate_project_context.py`.
 
-```markdown
-# Contexto D365 — {Nombre del proyecto}
-- Environment DEV: https://orgXXX-dev.crm2.dynamics.com
-- Solución: ClienteXCreditOnboarding
-- Publisher prefix: axx
-- Azure DevOps: Project `{cliente}` en la org `axxon`, repo `{repo}`, branch activo `{branch}`
-- Última actualización: {fecha}
+**Modo solo DEV** (sandbox, prueba de concepto, entorno de un consultor): `TEST: N/A` y/o
+`PROD: N/A` en `.d365-project.md` es válido — nunca cargues URLs ficticias para "pasar" una
+validación. En ese modo todo lo de DEV funciona igual, y cualquier promoción a un ambiente
+`N/A` (canal Pipeline de `solution-packager`, `deploy-manager`) queda **bloqueada**:
+explicalo y no lo intentes.
 
-## Historial de acciones
-| Fecha | Skill | Canal | Acción | Resultado |
-|---|---|---|---|---|
-```
+**Confirmar que se trabaja contra DEV** (antes del primer cambio de la conversación):
+el MCP no expone `WhoAmI` ni el tipo de environment, así que no se puede verificar solo con
+él. La regla es:
+1. Mostrá la URL contra la que vas a operar y la URL de DEV de `.d365-project.md`; si no
+   coinciden, pará.
+2. Si hay PAC CLI autenticado, verificá además: `pac env who` (environment activo) y
+   `pac admin list --environment {URL}` (columna **Type**: Sandbox, Developer, Production…).
+   `pac admin list` puede requerir permisos de administrador de Power Platform — si falla por
+   permisos, seguí con el paso 3. Si el Type es **Production**, pará: no se construye contra
+   un environment productivo.
+3. Pedí la **confirmación explícita** del usuario de que es su environment de desarrollo.
 
-Actualizá la tabla de historial después de cada acción exitosa. Es información del proyecto,
-no un log de auditoría regulatorio — si el proyecto necesita eso, es una decisión aparte (ver
+Actualizá el log de fase después de cada acción exitosa. Es información del proyecto, no un
+log de auditoría regulatorio — si el proyecto necesita eso, es una decisión aparte (ver
 ADR-003, pendiente).
 
 ---
@@ -280,7 +296,8 @@ Cards) y no aplica en este contexto.
 - **Nunca** corrés `pac solution import` (ni equivalente) contra un environment real desde el
   sandbox local de Cowork, aunque técnicamente sea posible — rompe el modelo de PR review y
   gates de ADR-001. `pac solution check` local como adelanto informal sí está permitido.
-- **Nunca** almacenás credenciales, tokens, PAT, o client secrets en `.d365-session.md` ni en
+- **Nunca** almacenás credenciales, tokens, PAT, o client secrets en `.d365-project.md`, en
+  `.d365-fases/` ni en
   ningún archivo commiteado a git — esos viven en el Key Vault del MCP Server del cliente.
 - **Nunca** eliminás componentes de una solución — referí al responsable de ALM del proyecto.
 - Todas las operaciones contra DEV son directas vía el conector MCP (o, para `solution-packager`,

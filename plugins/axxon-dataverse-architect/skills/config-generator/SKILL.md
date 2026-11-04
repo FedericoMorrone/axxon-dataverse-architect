@@ -39,7 +39,7 @@ esto.
 | `create_env_variable_definition` | **DEV / Web API** | Crea la *definición* (schema name, tipo, display name, default value) directo en DEV — misma lógica que `entity-builder`: se itera y prueba en DEV antes de exportar, no se autoría a mano en XML |
 | `generate_deployment_settings`   | Git | Ejecuta `pac solution create-settings` sobre el export de la solución y produce el JSON base con los *valores* por ambiente |
 | `set_settings_value`         | Git | Completa el valor de una Environment Variable o Connection Reference para un ambiente específico dentro del JSON — nunca en texto plano si es secreto |
-| `generate_sdd`               | — | Compila el historial de `.d365-session.md` del Cowork Project + los PRs asociados + el índice de ADRs de la wiki del proyecto en un Solution Design Document |
+| `generate_sdd`               | — | Compila el log de `.d365-fases/fase-2-implement.md` + los PRs asociados + el índice de ADRs de la wiki del proyecto en un Solution Design Document |
 
 > **Distinción clave:** la *definición* de la variable (qué existe) es metadata como cualquier
 > columna — vive en DEV, se prueba en DEV. El *valor* por ambiente (qué vale en TEST vs PROD)
@@ -147,7 +147,7 @@ pac solution import --path ./build/solution_managed.zip --settings-file ./deploy
 ## 2. Solution Design Document (SDD)
 
 Al final de una sesión de diseño, o cuando el usuario lo pide, la skill genera el SDD
-compilando **tanto** el historial de `.d365-session.md` (contexto conversacional) **como** los PRs y
+compilando **tanto** el log de `.d365-fases/fase-2-implement.md` (contexto de la fase) **como** los PRs y
 runs de pipeline asociados a la sesión (estado real), más el **índice de ADRs** de la wiki del
 proyecto (`adr-recorder`): leé la página índice con el tool `wiki` (action
 `get_page_content`) y transcribí la tabla con links — no resumas ni reinterpretes las
@@ -201,7 +201,7 @@ consultar la wiki del proyecto"* en vez de omitirla.
 > ADRs en estado Propuesto: {n} — pendientes de aceptación.
 
 ## 7. Historial de la sesión
-{historial de .d365-session.md serializado como tabla}
+{log de .d365-fases/fase-2-implement.md serializado como tabla}
 
 ## 8. Estado del pipeline de promoción
 {lista de runs con estado y links}

@@ -41,7 +41,7 @@ esta implicancia de costo — no es gratis solo porque el setup lo sea.
 
 ## Flujo
 
-1. **Verificar prerequisitos** — PAC CLI instalado (`pac --version`). Si falta, **pedir
+1. **Verificar prerequisitos** — PAC CLI instalado (`pac` sin argumentos muestra la versión). Si falta, **pedir
    confirmación explícita antes de instalar** — a diferencia del `dv-connect` original, que
    instala directo, acá seguimos nuestro propio principio de nunca instalar sin que el usuario
    lo apruebe primero.

@@ -15,7 +15,7 @@ tablas con una experiencia a medida).
 
 ## Antes que nada — verificar el entorno
 
-Corré `environment-check` primero (Node.js, PAC CLI ≥2.7.0) — no arranques el flujo de
+Corré `environment-check` primero (Node.js ≥18, PAC CLI en su última versión) — no arranques el flujo de
 Clarify/Generate/Deploy con una herramienta faltante o desactualizada, vas a fallar a mitad
 de camino en vez de decirlo desde el principio.
 
@@ -38,13 +38,13 @@ un proyecto real:
 - **DataAPI tipada** — operaciones CRUD contra tablas de Dataverse vía `props.dataApi`, nunca
   fetch directo a la Web API desde la página.
 - **PAC CLI** para todo: generación de schema y deployment. **Prerequisitos**: Node.js LTS,
-  PAC CLI ≥ 2.7.0, Azure CLI (`az login`, mismo tenant que `pac auth list`) — este último
+  PAC CLI en su última versión (Microsoft pide "Latest"), Azure CLI (`az login`, mismo tenant que `pac auth list`) — este último
   **solo** si la página necesita crear entidades nuevas; si trabaja sobre tablas ya
   existentes, no hace falta `az`.
 
 ## Flujo (adaptado del oficial: Clarify → Generate → Deploy → Verify)
 
-1. **Prerequisitos** — verificá versión de Node.js y PAC CLI (`pac --version` ≥ 2.7.0).
+1. **Prerequisitos** — verificá versión de Node.js (≥18) y PAC CLI (`pac` sin argumentos muestra la versión; tiene que ser la última).
 2. **Autenticación** — confirmá `pac auth list` apunta al environment correcto de
    `.d365-project.md`; si hace falta crear entidades, confirmá también `az login`.
 3. **Clarificar requerimiento** — tipo de página (grid, dashboard, formulario custom), fuente

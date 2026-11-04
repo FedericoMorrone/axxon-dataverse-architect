@@ -23,9 +23,15 @@ Opera en **dos canales completamente separados**, con orígenes distintos:
 
 ## Antes de cualquier operación — confirmar el environment
 
-`pac auth list` + `pac org who`, mostrarle el resultado al usuario y confirmar que coincide
-con el ambiente que se pretende tocar — nunca asumir. Los consultores trabajan contra varios
-environments en paralelo; confundir uno por otro en esta skill es el error más caro posible.
+`pac auth list` + `pac env who` (antes `pac org who`), mostrarle el resultado al usuario y
+confirmar que coincide con el ambiente que se pretende tocar — nunca asumir. Los consultores
+trabajan contra varios environments en paralelo; confundir uno por otro en esta skill es el
+error más caro posible. Para el canal DEV, además, la regla de "confirmar que es DEV" del
+conductor (`dataverse-architect`): URL igual a la DEV de `.d365-project.md`, y si se puede,
+`pac admin list --environment {URL}` para ver el **Type** — si es Production, no se opera.
+
+**Modo solo DEV:** si `.d365-project.md` declara TEST o PROD como `N/A`, el canal Pipeline
+hacia ese ambiente queda bloqueado — no hay destino de promoción.
 
 ---
 
@@ -176,7 +182,7 @@ La columna `UniqueName` (sin espacios) es la que se usa en el resto de los coman
 
 Antes de agregar un componente o crear algo dentro de una solución, seguí el mismo criterio
 que `entity-builder`/`form-designer`/`view-designer`/`business-rule-engine`: leer el campo
-`Solución` de `.d365-session.md` primero; si falta, está vacío, o `pac solution list` muestra
+`## Solución Dataverse` de `.d365-project.md` primero; si falta, está vacío, o `pac solution list` muestra
 más de una candidata, preguntarle al usuario explícitamente — nunca asumir ni tomar la primera.
 
 ---
@@ -292,5 +298,5 @@ jobs = client.records.list("importjob",
   importar, se reporta al usuario — nunca se reintenta automáticamente con otra versión.
 - **Nunca** eliminar componentes de una solución administrada — crear una patch solution o
   una nueva versión.
-- Siempre confirmar el environment (`pac auth list` + `pac org who`) antes de cualquier
+- Siempre confirmar el environment (`pac auth list` + `pac env who`) antes de cualquier
   operación — nunca asumir contra cuál se está trabajando.

@@ -144,7 +144,7 @@ Arquitecto D365 (usuario)
       en Cowork"
 - [ ] Skill `dataverse-architect` y las skills específicas (`entity-builder`, `form-designer`, etc.)
       instaladas/habilitadas en el workspace de Cowork
-- [ ] `.d365-session.md` inicial creado en el Project (o se genera automáticamente en el
+- [ ] `.d365-project.md` creado en el Project (o se genera automáticamente en el
       primer pedido, según `dataverse-architect/SKILL.md`)
 
 ---
@@ -186,7 +186,7 @@ X.0.0.0  → Release mayor (nueva arquitectura)
 ## Flujo de trabajo típico con el agente (v3.0.0, Cowork)
 
 ```
-1. Iniciar sesión → skill `dataverse-architect` pide (o lee de `.d365-session.md`) environment DEV,
+1. Iniciar sesión → skill `dataverse-architect` pide (o lee de `.d365-project.md`) environment DEV,
    solución, publisher, repo+branch de ADO
 2. Describir la entidad en lenguaje natural
    → entity-builder crea tabla + columnas + relaciones EN DEV (feedback inmediato)

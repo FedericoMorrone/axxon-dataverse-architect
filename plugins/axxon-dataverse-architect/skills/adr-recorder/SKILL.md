@@ -42,8 +42,8 @@ cada acción: un registro inflado deja de leerse.
 
 ## Antes de arrancar — configuración de la wiki
 
-1. Leé la sección `## Wiki de ADRs` de `.d365-project.md` (si el proyecto se trabaja sin el
-   supraagente y solo existe `.d365-session.md`, buscala ahí):
+1. Leé la sección `## Wiki de ADRs` de `.d365-project.md` (si el proyecto todavía tiene un
+   `.d365-session.md` viejo, el conductor ofrece migrarlo — ver `dataverse-architect`):
 
    ```markdown
    ## Wiki de ADRs
@@ -167,8 +167,7 @@ la decisión. Hechos verificados separados de supuestos — marcá los supuestos
    `linkType: "Wiki"`, `workItemId`, `wikiId`, `pagePath` (y `pageId` si lo obtuviste de
    `get_page`). Si el link falla, no es bloqueante: agregá un comentario en la User Story con
    `wit_work_item_comment_write` con el link a la página y reportalo.
-8. **Registrá la acción** en el log de la fase (`.d365-fases/fase-2-implement.md`, o el
-   historial de `.d365-session.md`):
+8. **Registrá la acción** en el log de la fase (`.d365-fases/fase-2-implement.md`):
 
    | Fecha | Subagente | Skill | Canal | Acción | Resultado |
    |---|---|---|---|---|---|

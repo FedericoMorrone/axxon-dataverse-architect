@@ -50,7 +50,7 @@ el review por PR importa más acá que la iteración conversacional rápida.
 | `list_business_units`       | GET         | `/api/data/v9.2/businessunits?$select=name,parentbusinessunitid`          |
 | `list_teams`                | GET         | `/api/data/v9.2/teams?$select=name,teamtype,businessunitid`               |
 | `list_column_security`      | GET         | `/api/data/v9.2/fieldsecurityprofiles`                                    |
-| `get_entity_privileges`     | GET         | `/api/data/v9.2/EntityDefinitions(LogicalName='xxx')/Privileges` — para cachear GUIDs de privilegios por entidad en `.d365-session.md` del Cowork Project |
+| `get_entity_privileges`     | GET         | `/api/data/v9.2/EntityDefinitions(LogicalName='xxx')/Privileges` — para cachear GUIDs de privilegios por entidad en la sección `## Caché técnico` de `.d365-fases/fase-2-implement.md` |
 
 ### Canal escritura — Git (genera XML, commitea, nunca ejecuta directo)
 
@@ -88,7 +88,7 @@ Cada Security Role define permisos por entidad con dos dimensiones:
 
 Los privilege IDs son GUIDs fijos por entidad. Para no tener que resolverlos en cada
 interacción, `get_entity_privileges` los consulta una vez por entidad y el resultado se
-persiste en `.d365-session.md` del Cowork Project para el resto de la sesión:
+persiste en `## Caché técnico` de `.d365-fases/fase-2-implement.md` para el resto del proyecto:
 
 ```
 GET /api/data/v9.2/EntityDefinitions(LogicalName='axx_creditsolicitud')/Privileges
