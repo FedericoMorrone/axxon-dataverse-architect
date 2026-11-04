@@ -44,7 +44,7 @@ esto.
 | `create_env_variable_definition` | **DEV / Web API** | Crea la *definición* (schema name, tipo, display name, default value) directo en DEV — misma lógica que `entity-builder`: se itera y prueba en DEV antes de exportar, no se autoría a mano en XML |
 | `generate_deployment_settings`   | Git | Ejecuta `pac solution create-settings` sobre el export de la solución y produce el JSON base con los *valores* por ambiente |
 | `set_settings_value`         | Git | Completa el valor de una Environment Variable o Connection Reference para un ambiente específico dentro del JSON — nunca en texto plano si es secreto |
-| `generate_sdd`               | — | Compila el historial de `.d365-session.md` del Cowork Project + los PRs asociados en un Solution Design Document |
+| `generate_sdd`               | — | Compila el historial de `.d365-session.md` del Cowork Project + los PRs asociados + el índice de ADRs de la wiki del proyecto en un Solution Design Document |
 
 > **Distinción clave:** la *definición* de la variable (qué existe) es metadata como cualquier
 > columna — vive en DEV, se prueba en DEV. El *valor* por ambiente (qué vale en TEST vs PROD)
@@ -153,7 +153,12 @@ pac solution import --path ./build/solution_managed.zip --settings-file ./deploy
 
 Al final de una sesión de diseño, o cuando el usuario lo pide, la skill genera el SDD
 compilando **tanto** el historial de `.d365-session.md` (contexto conversacional) **como** los PRs y
-runs de pipeline asociados a la sesión (estado real).
+runs de pipeline asociados a la sesión (estado real), más el **índice de ADRs** de la wiki del
+proyecto (`adr-recorder`): leé la página índice con el tool `wiki` (action
+`get_page_content`) y transcribí la tabla con links — no resumas ni reinterpretes las
+decisiones, el ADR en la wiki es la fuente. Si no hay wiki de ADRs configurada o el MCP de
+Azure DevOps no responde, dejá la sección con la nota *"Índice de ADRs no disponible —
+consultar la wiki del proyecto"* en vez de omitirla.
 
 ```markdown
 # Solution Design Document
@@ -193,13 +198,20 @@ runs de pipeline asociados a la sesión (estado real).
 |------------------------------|----------|------------------------------------|-----------------------------|--------|
 | axx_ApiBaseUrl        | String | func-...-dev.azurewebsites.net | func-...-test... | func-...-prod... |
 
-## 6. Historial de la sesión
+## 6. Decisiones de arquitectura (ADRs — wiki del proyecto)
+| # | Título | Estado | Fecha | User Story |
+|---|---|---|---|---|
+| [ADR-0001]({link a la página}) | Modelo de seguridad por BU | Aceptado | 2026-11-04 | #1234 |
+
+> ADRs en estado Propuesto: {n} — pendientes de aceptación.
+
+## 7. Historial de la sesión
 {historial de .d365-session.md serializado como tabla}
 
-## 7. Estado del pipeline de promoción
+## 8. Estado del pipeline de promoción
 {lista de runs con estado y links}
 
-## 8. Próximos pasos
+## 9. Próximos pasos
 - [ ] Configurar vistas (Views) para cada tabla
 - [ ] Ejecutar pruebas funcionales en DEV
 - [ ] Aprobar PR de seguridad y settings

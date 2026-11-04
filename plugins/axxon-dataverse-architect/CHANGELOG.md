@@ -1,5 +1,33 @@
 # Changelog — Axxon Dataverse Architect
 
+## v1.7.0-rc1 (2026-11-04)
+
+Registro estructurado de decisiones de arquitectura del proyecto del cliente (ver ADR-005).
+
+### Agregado
+- **`adr-recorder`** (skill nueva): registra ADRs del proyecto en la **wiki de proyecto** de
+  Azure DevOps vía el servidor MCP oficial (`wiki`, `wiki_upsert_page`,
+  `wit_work_item_link_write`). Numeración correlativa calculada al momento de escribir,
+  página por ADR + índice, ciclo de vida Propuesto → Aceptado → Reemplazado/Deprecado (ADR
+  aceptado inmutable), link del ADR a la User Story, y modo offline (`.d365-adr/`) si el MCP
+  no responde.
+- Tools del MCP verificados contra `microsoft/azure-devops-mcp` antes de escribir la skill.
+  Hallazgo incorporado como regla: `wiki_upsert_page` **sobrescribe en silencio** si la
+  página existe (hace update tras un 409) — la skill verifica con `get_page` antes de crear.
+  También: si se omite `project`, la URL se arma con el project vacío — siempre pasarlo.
+
+### Cambiado
+- **`dataverse-architect`** (conductora): regla transversal "Registro de decisiones (ADRs)"
+  con los disparadores (mecanismo de lógica, cadena Custom API → Plugin → Azure Function,
+  sync vs. async, GAP con customización, seguridad, modelo de datos, excepciones a ADR-001);
+  paso 5 en el análisis de alcance de User Story; nueva fila de canal **ADO Wiki**; fila de
+  routing; publicar/cambiar estado de un ADR entra al patrón de confirmación.
+- **`config-generator`**: el SDD incorpora la sección "Decisiones de arquitectura (ADRs)"
+  transcribiendo el índice de la wiki (secciones siguientes renumeradas).
+
+### Docs
+- `docs/ADR-005-adr-registry-project-wiki.md`.
+
 ## v1.6.0-rc1 (2026-09-29)
 
 Se retoma, a pedido explícito y puntual, uno de los 3 ítems que habían quedado en pausa el

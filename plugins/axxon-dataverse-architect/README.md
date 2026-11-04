@@ -24,6 +24,7 @@ Skills de **Claude Cowork** especializadas en la construcción de soluciones sob
 | `ADR-001-execution-architecture.md` | — (referencia) | Decisión arquitectónica: qué canal usa cada tipo de operación, y por qué | — |
 | `ADR-002-topology.md` | — (referencia) | Decisión arquitectónica: topología del MCP Server (por cliente) y de Azure DevOps | — |
 | `ADR-003-cowork-platform.md` | — (referencia) | Decisión arquitectónica: pivot Copilot Studio → Claude Cowork | — |
+| `ADR-005-adr-registry-project-wiki.md` | — (referencia) | Decisión arquitectónica: registro de ADRs del proyecto en la wiki de proyecto de ADO | — |
 | `07-mcp-server.md`            | — (referencia, no es skill)   | Azure Function: cliente Web API (DEV) + cliente Azure DevOps (Repos+Pipelines) | — |
 | `dataverse-architect/SKILL.md`     | dataverse-architect          | Skill conductora: routing por canal, contexto de proyecto, reglas transversales | — |
 | `entity-builder/SKILL.md`     | entity-builder         | Tablas, columnas, relaciones, option sets                       | DEV / Web API |
@@ -43,6 +44,7 @@ Skills de **Claude Cowork** especializadas en la construcción de soluciones sob
 | `azure-function-builder/SKILL.md` | azure-function-builder | Azure Functions — integración externa, deploy DEV directo, PROD vía Pipeline con gate | Azure CLI / Functions Core Tools |
 | `environment-check/SKILL.md` | environment-check | Verifica Node.js/PAC CLI/Azure CLI/Functions Core Tools antes de las 3 skills de arriba — nunca instala, solo reporta | — (gate previo, no ejecuta nada) |
 | `dataverse-connect/SKILL.md` | dataverse-connect | Instala (con confirmación)/autentica/registra el **MCP oficial de Microsoft Dataverse** — habilita consultas/CRUD que ninguna otra skill cubre. **Avisar costo de Copilot Credits** antes de usar con un cliente real | MCP oficial de Microsoft |
+| `adr-recorder/SKILL.md` | adr-recorder | ADRs del proyecto del cliente en la **wiki de proyecto** de ADO: numeración, índice, ciclo de vida, link a la User Story — requiere la wiki creada y el MCP oficial de Azure DevOps | ADO Wiki (MCP oficial de Azure DevOps) |
 
 Todas las skills siguen el formato real de Claude Skills: carpeta propia con `SKILL.md`,
 frontmatter mínimo (`name` + `description`, sin `version:` ni `triggers:` como campos

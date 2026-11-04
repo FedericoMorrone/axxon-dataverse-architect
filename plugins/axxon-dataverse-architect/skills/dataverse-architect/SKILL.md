@@ -22,7 +22,7 @@ técnicas vos mismo — cada skill específica (`entity-builder`, `form-designer
 `business-rule-engine`, `view-designer`, `duplicate-detection`, `security-architect`,
 `config-generator`, `solution-packager`, `app-composer`, `genpage-builder`, `flow-builder`,
 `code-app-builder`, `plugin-builder`, `custom-api-builder`, `azure-function-builder`,
-`environment-check`, `dataverse-connect`) tiene sus propios MCP tools y reglas. Esta skill fija lo que es común a
+`environment-check`, `dataverse-connect`, `adr-recorder`) tiene sus propios MCP tools y reglas. Esta skill fija lo que es común a
 todas.
 
 ---
@@ -37,6 +37,8 @@ todas.
   de Cowork no lo marcaría por sí solo.
 - Al cierre de un bloque de trabajo, ofrecés documentar en el Solution Design Document
   (`config-generator`) — Word, Markdown, o un texto breve para una User Story de Azure DevOps.
+- Cuando se toma una decisión de arquitectura significativa, ofrecés registrarla como ADR en
+  la wiki del proyecto (`adr-recorder`) — ver "Registro de decisiones (ADRs)" más abajo.
 
 ---
 
@@ -59,6 +61,7 @@ no hace falta configuración adicional más allá de tenerlo agregado en Customi
 | **DEV / Web API** *(agregado a la fila de arriba)* | Definición del contrato de un Custom API (metadata, no la implementación) | `custom-api-builder` |
 | **Azure CLI / Functions Core Tools** | Build y deploy de Azure Functions — DEV directo permitido, PROD **siempre** vía Pipeline con gate humano (mismo criterio que `solution-packager`), contra la suscripción de `.d365-project.md` | `azure-function-builder` |
 | **MCP oficial de Microsoft Dataverse** | Consultas/analytics y CRUD sobre datos existentes — habilitado por `dataverse-connect`, distinto del D365 Architect MCP Server propio; instalar solo con confirmación, avisar el costo de Copilot Credits antes de usarlo con un cliente real | `dataverse-connect` |
+| **ADO Wiki (MCP oficial de Azure DevOps)** | Registro de ADRs del proyecto en la wiki de proyecto del cliente — documentación, no construcción: no toca Dataverse ni el repo de la solución | `adr-recorder` |
 
 **Regla dura, sin excepción:** ninguna operación importa una solución contra TEST o PROD
 directamente, ni siquiera si Cowork tiene PAC CLI instalado localmente y técnicamente
@@ -129,6 +132,9 @@ DevOps), **no rutees directo a la primera skill obvia**. Primero analizá el alc
    connector estándar que resolvería esto con `flow-builder` en vez de código custom),
    preguntá antes de asumir — no default a la opción más compleja (Plugin + Azure Function)
    si un Business Rule o un flow alcanzan.
+5. Si el plan implica una **decisión de arquitectura con alternativas reales** (ver
+   "Registro de decisiones (ADRs)"), decilo al mostrar el plan y ofrecé registrarla como ADR
+   — antes de construir, así el ADR documenta la decisión y no se reconstruye después.
 
 ## Routing a skills específicas
 
@@ -153,6 +159,7 @@ DevOps), **no rutees directo a la primera skill obvia**. Primero analizá el alc
 | Custom API, custom action, mensaje custom, endpoint tipado | `custom-api-builder` | DEV / Web API |
 | Azure Function, webhook, middleware, integración externa custom | `azure-function-builder` | Azure CLI / Functions Core Tools |
 | Consultar/leer datos existentes, analytics, bulk CRUD, "conectate a Dataverse" | `dataverse-connect` | MCP oficial de Microsoft |
+| ADR, "registrá esta decisión", "por qué elegimos X", aceptar/reemplazar un ADR | `adr-recorder` | ADO Wiki (MCP oficial de Azure DevOps) |
 
 Si el pedido mezcla varias operaciones ("creá la tabla, el form, y bloqueá el campo monto si
 el estado es Aprobada"), descomponelo y secuencialo en orden de dependencia — tabla → columnas
@@ -160,6 +167,32 @@ el estado es Aprobada"), descomponelo y secuencialo en orden de dependencia — 
 Si el pedido viene de una User Story completa (no una frase suelta), aplicá primero el
 análisis de la sección anterior — la cadena Custom API → Plugin → Azure Function no siempre
 es obvia desde el título de la Historia.
+
+---
+
+## Registro de decisiones (ADRs) — regla transversal
+
+Las decisiones de arquitectura de la solución del cliente se registran como ADRs en la
+**wiki de proyecto** de su Azure DevOps, vía `adr-recorder`. Lo detectás vos (el conductor),
+no cada skill puntual, porque sos quien ve el alcance completo antes de rutear.
+
+**Ofrecé un ADR cuando el trabajo implique:**
+- elegir entre Business Rule, flow, plugin o Custom API para una misma necesidad;
+- la cadena Custom API → Plugin → Azure Function, o decidir integración sync vs. async;
+- resolver un GAP con customización en vez de funcionalidad estándar;
+- definir o cambiar el modelo de seguridad (BU, teams, field security);
+- una decisión de modelo de datos con alternativas (N:N vs. tabla intermedia, ownership,
+  alternate keys);
+- cualquier excepción a una regla de ADR-001 o a las convenciones del proyecto.
+
+**No** ofrezcas ADR para acciones de construcción sin alternativa en juego (una columna más,
+un campo en un form, una vista) — eso va al log de fase y al SDD.
+
+**Cómo:** al mostrar el plan, agregá una línea — *"Esto implica una decisión de arquitectura
+(X vs. Y). ¿La registro como ADR en la wiki del proyecto?"*. Nunca publiques un ADR sin
+confirmación, y nunca lo marques Aceptado sin que el usuario lo diga explícitamente — las
+reglas completas están en `adr-recorder`. Antes de proponer una decisión nueva, consultá el
+índice de ADRs: si ya hay uno aceptado sobre el tema, mencionalo.
 
 ---
 
@@ -174,6 +207,7 @@ Mostrás resumen y esperás confirmación explícita antes de:
 - Commitear cambios de seguridad o env variables a un branch
 - Abrir un Pull Request
 - Disparar un pipeline de promoción a TEST
+- Publicar un ADR en la wiki del proyecto, o cambiar su estado
 - Cualquier acción que involucre TEST o PROD
 
 ```
