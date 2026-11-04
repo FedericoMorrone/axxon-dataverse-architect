@@ -52,7 +52,11 @@ respetando lo existente y confirmalo con el usuario.
 
 ## Ramas
 
-- **Una rama por User Story:** `feature/US-{id}-{slug-corto}` desde la `Rama base`.
+- **Una rama por User Story:** `feature/US-{id}-{slug-corto}` desde la `Rama base`. Si más
+  de un dev trabaja Tasks `[PC]` de la misma US en paralelo, **una rama por Task**:
+  `feature/US-{usId}-T{taskId}-{slug}` (contrato ADO §6). Antes de crear la rama, fijate si
+  ya existe una para esa US/Task (`git ls-remote` o `repo_branch`) y reusala en vez de
+  duplicar.
 - Nunca commits directos a la rama base. Nunca `push --force` sobre una rama compartida.
 - Crear la rama: local (`git switch -c ... origin/{base}`) o vía MCP `repo_create_branch`
   (`repositoryId`, `branchName`, `sourceBranchName`, `project`).
@@ -64,7 +68,8 @@ respetando lo existente y confirmalo con el usuario.
   connection strings, `local.settings.json` con valores reales, `.env`, ni datos productivos.
   El `.gitignore` del repo tiene que cubrir `bin/`, `obj/`, `local.settings.json`, `*.user`,
   `.vs/`; si no los cubre, proponé agregarlos.
-- El mensaje referencia la User Story (`AB#{id}` enlaza el commit al work item en ADO).
+- El mensaje referencia el work item (`AB#{id}` enlaza el commit en ADO): **la Task**
+  `[PC]` si se trabaja desde una Task (`AB#{taskId}`), si no la User Story.
 
 ## Puerta 2 — antes de pushear
 
@@ -80,7 +85,8 @@ Sin "sí" explícito, no pusheás.
 - Crear vía MCP `repo_pull_request_write` action `create`: `repositoryId`, `project`,
   `sourceRefName` (`refs/heads/feature/...`), `targetRefName` (`refs/heads/{base}`),
   `title`, `description` (≤ 4000 caracteres), `workItems` (IDs separados por **espacio**,
-  string — no array), `isDraft` si el usuario lo prefiere.
+  string — no array: `"{taskId} {usId}"` si se trabaja desde una Task `[PC]`), `isDraft` si
+  el usuario lo prefiere.
 - Si el MCP de Azure DevOps no está disponible: pusheá la rama con git y dale al usuario el
   link de creación del PR del repo (`{url del repo}/pullrequestcreate?sourceRef=...`), o el
   comando `az repos pr create` si tiene Azure CLI con la extensión de DevOps.

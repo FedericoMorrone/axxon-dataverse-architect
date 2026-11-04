@@ -1,5 +1,18 @@
 # Changelog — Axxon Dataverse Architect
 
+## v1.8.1-rc1 (2026-11-04)
+
+Integración con el flujo entre roles (contrato ADO — `axxon-dataverse-agent/docs/ado-contract.md`).
+
+- **`dataverse-architect`**: si el pedido llega desde `ado-dev-queue`, la Puerta 1 ya está
+  cumplida en ADO (`plan-aprobado` + comentarios del plan): no se re-corre
+  `build-approach-advisor`; se muestra al dev solo su pieza según `[axx:contrato-tecnico v1]`
+  y se espera su OK antes de crear la rama. Contrato faltante o contradictorio → se frena y
+  se corrige en ADO.
+- **`code-repo-manager`**: rama por Task (`feature/US-{usId}-T{taskId}-{slug}`) cuando varios
+  devs trabajan la misma US; reusa ramas existentes; commits con `AB#{taskId}`; PR con
+  `workItems` = `"{taskId} {usId}"`.
+
 ## v1.8.0-rc1 (2026-11-04)
 
 Desarrollo profesional (pro-code) de punta a punta, con tres puertas de validación humana
