@@ -1,5 +1,26 @@
 # Changelog — Axxon Dataverse Architect
 
+## v1.9.1-rc1 (2026-11-06)
+
+Conductor más liviano (reporte de usuario: "el skill del arquitecto quedó muy largo").
+
+- **`dataverse-architect` — cuerpo de 20.838 a 6.597 caracteres (−68%).** Se invoca junto con
+  cada skill puntual, así que el tamaño se pagaba en cada pedido. El `SKILL.md` deja lo que
+  aplica siempre (identidad, una sola tabla de routing, regla dura de TEST/PROD, resumen de
+  contexto, puertas y ADRs, lista de confirmaciones, restricciones) y el detalle pasa a
+  `references/`, que se lee cuando hace falta:
+  - `contexto-proyecto.md` (siempre al primer pedido de la conversación): esquema, migración
+    de `.d365-session.md`, modo solo DEV, confirmación de DEV, log.
+  - `analisis-user-story.md`: análisis de alcance y pedidos compuestos.
+  - `pro-code.md`: tres puertas, plan ya aprobado en ADO, orden de ruteo.
+  - `canales.md`: detalle de cada canal de ejecución.
+  - `errores-y-output.md`: formato de confirmación, errores, output.
+- Se fusionaron las dos tablas de routing (por canal y por skill) en una. Los criterios de
+  cuándo ofrecer un ADR quedan solo en `adr-recorder` (antes estaban duplicados).
+- Sin cambios de reglas: se verificaron 43 frases clave de la versión anterior contra el
+  `SKILL.md` nuevo, las referencias y `adr-recorder`, y todas las skills que se nombraban
+  siguen nombradas. La descripción del frontmatter no cambia (298 caracteres).
+
 ## v1.9.0-rc1 (2026-11-04)
 
 Fixes de prioridad 2 del documento de hallazgos.
